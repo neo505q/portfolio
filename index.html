@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-accent="blue">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ignatius Nigel — Aerospace Engineer</title>
+<meta name="description" content="Ignatius Nigel — Aerospace Engineering graduate. CAD, CFD, composite structures, UAV systems." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Sacramento&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#050810; --bg-1:#080d1c;
+    --panel:rgba(16,24,48,0.46);
+    --glass-border:rgba(140,180,255,0.14);
+    --glass-border-hi:rgba(120,220,255,0.4);
+    --text:#eaf2ff; --text-dim:#8fa0c4; --text-faint:#5c6c90;
+    --radius:20px; --nav-h:74px;
+    --accent:#3ac8ff; --accent-2:#7cf3ff; --accent-dim:#1c6fa8; --accent-ink:#03101f;
+  }
+  html[data-theme="light"]{
+    --panel:rgba(255,255,255,0.55);
+    --glass-border:rgba(20,40,80,0.10);
+    --glass-border-hi:rgba(20,80,160,0.35);
+    --text:#0b1830; --text-dim:#45557a; --text-faint:#8194b5;
+  }
+  html[data-accent="violet"]{ --accent:#a78bfa; --accent-2:#c4b5fd; --accent-dim:#6d4fc9; }
+  html[data-accent="emerald"]{ --accent:#34d399; --accent-2:#6ee7b7; --accent-dim:#0f9868; }
+  html[data-accent="amber"]{ --accent:#fbbf24; --accent-2:#fde68a; --accent-dim:#b8860b; --accent-ink:#241900; }
+  html[data-accent="coral"]{ --accent:#fb923c; --accent-2:#fdba74; --accent-dim:#c2570f; --accent-ink:#241100; }
+  html[data-accent="rose"]{ --accent:#f87171; --accent-2:#fca5a5; --accent-dim:#c23434; }
+  html[data-accent="magenta"]{ --accent:#f472b6; --accent-2:#f9a8d4; --accent-dim:#c22a80; }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:#000; color:var(--text); font-family:'Inter', sans-serif; line-height:1.6;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative;
+    transition:color 0.35s ease;
+  }
+  h1,h2,h3,h4{ font-family:'Plus Jakarta Sans', sans-serif; letter-spacing:-0.01em; }
+  h1, .section-head h2{ letter-spacing:-0.08em; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--accent); color:var(--accent-ink); }
+  button{ font-family:inherit; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  .snap-container{ scroll-snap-type:y mandatory; }
+  section, header.hero{ scroll-snap-align:start; scroll-snap-stop:always; }
+
+  /* ===================== DIRECTIONAL REVEAL ANIMATIONS ===================== */
+  .reveal-anim > *{ transition:opacity 0.7s ease, transform 0.7s ease; }
+  .reveal-left > *{ opacity:0; transform:translateX(-50px); }
+  .reveal-left.in-view > *{ opacity:1; transform:translateX(0); }
+  .reveal-up > *{ opacity:0; transform:translateY(50px); }
+  .reveal-up.in-view > *{ opacity:1; transform:translateY(0); }
+  .reveal-scale > *{ opacity:0; transform:scale(0.9); }
+  .reveal-scale.in-view > *{ opacity:1; transform:scale(1); }
+  .reveal-right > *{ opacity:0; transform:translateX(50px); }
+  .reveal-right.in-view > *{ opacity:1; transform:translateX(0); }
+  .reveal-fade > *{ opacity:0; transform:translateY(24px); }
+  .reveal-fade.in-view > *{ opacity:1; transform:translateY(0); }
+  .reveal-anim.in-view > *:nth-child(1){ transition-delay:0.02s; }
+  .reveal-anim.in-view > *:nth-child(2){ transition-delay:0.12s; }
+  .reveal-anim.in-view > *:nth-child(3){ transition-delay:0.22s; }
+  .reveal-anim.in-view > *:nth-child(4){ transition-delay:0.32s; }
+
+  /* ===================== 3D UNIVERSE BACKGROUND ===================== */
+  #canvas-container{ position:fixed; inset:0; width:100vw; height:100vh; z-index:0; pointer-events:none; background:#0d0d12; }
+  html[data-theme="light"] #canvas-container{ background:#f3f2ee; }
+  #bg-loading{
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:1;
+    color:#fff; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em;
+    pointer-events:none; transition:opacity 0.6s ease;
+  }
+  main, .navbar, .mobile-menu, footer{ position:relative; z-index:2; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+  .full-left{ padding-left:clamp(28px, 5cm, 150px); padding-right:28px; width:100%; }
+  .full-bleed{ width:100vw; margin-left:calc(50% - 50vw); position:relative; }
+
+  .glass{
+    background:var(--panel); border:1px solid var(--glass-border); border-radius:var(--radius);
+    backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%);
+    box-shadow:0 8px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03);
+    transition:background 0.35s ease, border-color 0.35s ease;
+  }
+
+  /* ===================== NAV ===================== */
+  .navbar{ position:fixed; top:16px; left:0; right:0; z-index:100; display:flex; justify-content:center; padding:0 20px; }
+  .nav-inner{ display:flex; align-items:center; gap:6px; padding:8px; border-radius:999px; }
+  .nav-links{ display:flex; align-items:center; gap:2px; }
+  .nav-links a{ padding:10px 18px; border-radius:999px; font-size:14px; font-weight:500; color:var(--text-dim); transition:all 0.25s ease; white-space:nowrap; }
+  .nav-links a:hover{ color:var(--text); }
+  .nav-links a.active{ background:linear-gradient(135deg, var(--accent), var(--accent-dim)); color:var(--accent-ink); font-weight:600; }
+  /* NAV GET-IN-TOUCH: borderless filled theme-aware button */
+  .nav-cta {
+    margin-left: 8px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: var(--nav-cta-bg);
+    border: 0;
+    color: var(--nav-cta-text, var(--accent));
+    font-size: 13.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: color 0.25s ease, transform 0.16s ease;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .nav-cta::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--accent);
+    transform: translateX(-105%);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+  }
+
+  .nav-cta:hover {
+    color: var(--accent-ink);
+  }
+
+  .nav-cta:hover::before {
+    transform: translateX(0);
+  }
+
+  .nav-cta:active {
+    transform: scale(0.95);
+  }
+
+  /* Dark theme: white background and black text */
+  html[data-theme="dark"] .nav-cta {
+    --nav-cta-bg: #fff;
+    --nav-cta-text: #000;
+  }
+
+  /* Light theme: black background and selected accent-color text */
+  html[data-theme="light"] .nav-cta {
+    --nav-cta-bg: #0b1830;
+    --nav-cta-text: var(--accent);
+  }
+
+  .theme-btn{ width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.03); border:1px solid var(--glass-border); color:var(--text); cursor:pointer; font-size:15px; margin-left:6px; position:relative; flex-shrink:0; }
+  .theme-dropdown{ position:absolute; top:calc(100% + 12px); right:0; z-index:120; padding:16px; border-radius:18px; min-width:220px; display:none; flex-direction:column; gap:14px; }
+  .theme-dropdown.open{ display:flex; }
+  .td-row-label{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-faint); }
+  .td-mode-row{ display:flex; gap:8px; }
+  .td-mode-btn{ flex:1; padding:9px 0; border-radius:10px; text-align:center; font-size:12.5px; font-weight:600; background:rgba(255,255,255,0.03); border:1px solid var(--glass-border); color:var(--text-dim); cursor:pointer; }
+  .td-mode-btn.active{ background:linear-gradient(135deg, var(--accent), var(--accent-dim)); color:var(--accent-ink); }
+  .td-color-row{ display:flex; gap:9px; flex-wrap:wrap; }
+  .td-dot{ width:26px; height:26px; border-radius:50%; cursor:pointer; border:2px solid transparent; transition:transform 0.15s ease; position:relative; }
+  .td-dot:hover{ transform:scale(1.12); }
+  .td-dot.active{ border-color:var(--text); }
+  .nav-wrap-pos{ position:relative; }
+
+  @media (max-width:760px){
+    .nav-links{ display:none; }
+    .nav-toggle{ display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:rgba(58,200,255,0.1); border:1px solid var(--glass-border); color:var(--text); font-size:16px; cursor:pointer; }
+    .nav-cta{ padding:9px 14px; font-size:12.5px; }
+  }
+  @media (min-width:761px){ .nav-toggle{ display:none; } }
+  .mobile-menu{ display:none; position:fixed; top:78px; left:20px; right:20px; z-index:99; flex-direction:column; padding:14px; border-radius:18px; }
+  body.nav-open .mobile-menu{ display:flex; }
+  .mobile-menu a{ padding:14px 10px; font-size:15px; color:var(--text-dim); border-bottom:1px solid var(--glass-border); }
+  .mobile-menu a:last-child{ border-bottom:none; }
+
+  /* ===================== HERO ===================== */
+  header.hero{ min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding-top:calc(var(--nav-h) + 30px); padding-bottom:60px; }
+  .hero-inner{ max-width:680px; }
+  .greet-line{ font-family:'JetBrains Mono', monospace; font-size:clamp(18px,2vw,22px); color:var(--text-dim); margin-bottom:4px; display:flex; align-items:center; min-height:30px; }
+  .greet-word{ color:var(--accent-2); font-weight:600; }
+  .greet-word::after{ content:"|"; margin-left:2px; color:var(--accent-2); animation:blink 1s step-end infinite; }
+  @keyframes blink{ 0%,49%{ opacity:1; } 50%,100%{ opacity:0; } }
+
+  .hero-name-block{ position:relative; line-height:0.95; }
+  .hero-name{
+    font-family:'Plus Jakarta Sans', sans-serif; font-weight:800; letter-spacing:-0.08em;
+    font-size:clamp(58px,7vw,105px); line-height:0.9;
+    color:#ffffff; display:inline-block;
+  }
+  html[data-theme="light"] .hero-name{ color:#0b1830; }
+  .hero-name .period{ color:var(--accent); }
+  .hero-cursive{
+    font-family:'Sacramento', cursive; font-weight:400; font-style:normal; color:var(--accent);
+    font-size:clamp(46px,5vw,70px); line-height:0.75;
+    margin-top:-5px; margin-left:18px; display:block; position:relative; z-index:2; transform:none;
+  }
+  .hero-desc{ margin-top:18px; max-width:560px; color:var(--text-dim); font-size:16px; }
+  .hero-desc b{ color:var(--text); font-weight:600; }
+  .hero-actions{ margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{ display:inline-flex; align-items:center; gap:9px; padding:14px 26px; border-radius:14px; font-size:14.5px; font-weight:600; cursor:pointer; border:1px solid transparent; transition:transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; position:relative; overflow:hidden; isolation:isolate; }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-solid{ background:linear-gradient(135deg, var(--accent), var(--accent-dim)); color:var(--accent-ink); box-shadow:0 8px 30px rgba(58,200,255,0.2); }
+  .btn-ghost{ background:rgba(255,255,255,0.02); border-color:var(--glass-border); color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--glass-border-hi); background:rgba(58,200,255,0.06); }
+
+  .hero-stats{ margin-top:40px; display:flex; gap:34px; flex-wrap:wrap; }
+  .hero-stat .num{ font-family:'Plus Jakarta Sans', sans-serif; font-size:26px; font-weight:700; color:var(--accent-2); }
+  .hero-stat .lbl{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-top:2px; }
+
+  /* ===================== SECTION SHELL ===================== */
+  section{ padding:100px 0; min-height:100vh; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
+  .section-head{ text-align:center; max-width:640px; margin:0 auto 50px; }
+  .section-head h2{ font-size:clamp(28px,3.6vw,40px); font-weight:600; }
+  .section-head p{ margin-top:14px; color:var(--text-dim); font-size:15.5px; }
+
+  /* ===================== ABOUT ===================== */
+  .about-card-shell{ width:100%; }
+  .about-card{ padding:clamp(24px,4vw,52px); display:grid; grid-template-columns:0.8fr 1.2fr; gap:44px; align-items:center; position:relative; transform:perspective(1200px) rotateX(var(--arx,0deg)) rotateY(var(--ary,0deg)); transition:transform 0.25s ease-out; will-change:transform; }
+  .about-photo{ aspect-ratio:1/1; border-radius:18px; border:1.5px dashed var(--glass-border); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; color:var(--text-faint); font-family:'JetBrains Mono',monospace; font-size:12px; background:radial-gradient(circle at 50% 35%, rgba(58,200,255,0.08), transparent 70%); text-align:center; padding:20px; overflow:hidden; }
+  .about-photo img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
+  .about-text p{ color:var(--text-dim); font-size:15.5px; margin-bottom:16px; }
+  .about-text b{ color:var(--accent-2); font-weight:600; }
+  .about-links{ margin-top:26px; display:flex; gap:12px; flex-wrap:wrap; }
+  @media (max-width:760px){ .about-card{ grid-template-columns:1fr; } }
+
+  /* ===================== EXPERIENCE ===================== */
+  .exp-tabs{ display:flex; justify-content:center; gap:8px; margin-bottom:38px; flex-wrap:wrap; padding:6px; border-radius:999px; max-width:fit-content; margin-left:auto; margin-right:auto; }
+  .exp-tab-btn{ padding:11px 24px; border-radius:999px; font-size:13.5px; font-weight:600; color:var(--text-dim); cursor:pointer; border:none; background:transparent; transition:all 0.25s ease; }
+  .exp-tab-btn.active{ background:linear-gradient(135deg, var(--accent), var(--accent-dim)); color:var(--accent-ink); }
+  .exp-panel{ display:none; }
+  .exp-panel.active{ display:block; }
+
+  .marquee-outer{ position:relative; padding:0 64px; }
+  .marquee-wrap{ overflow:hidden; mask-image:linear-gradient(90deg, transparent 0, black 4%, black 96%, transparent 100%); -webkit-mask-image:linear-gradient(90deg, transparent 0, black 4%, black 96%, transparent 100%); }
+  .marquee-track{ display:flex; gap:22px; overflow-x:auto; padding:12px 4px 8px; scrollbar-width:none; }
+  .marquee-track::-webkit-scrollbar{ display:none; }
+  .side-arrow{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:6;
+    width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:16px; color:var(--text); transition:all 0.2s ease;
+  }
+  .side-arrow:hover{ border-color:var(--glass-border-hi); background:rgba(58,200,255,0.15); }
+  .side-arrow.side-left{ left:6px; }
+  .side-arrow.side-right{ right:6px; }
+
+  .xcard{ min-width:340px; max-width:340px; flex-shrink:0; padding:26px; position:relative; overflow:hidden; transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)); transition:transform 0.2s ease-out; will-change:transform; }
+  .xcard .tc-date{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--accent-2); letter-spacing:0.05em; position:relative; z-index:1; }
+  .xcard h4{ margin-top:10px; font-size:17px; line-height:1.3; position:relative; z-index:1; max-width:76%; }
+  .xcard p{ margin-top:10px; font-size:13.5px; color:var(--text-dim); position:relative; z-index:1; }
+  .xcard .tc-tag{ margin-top:18px; display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:5px 12px; border-radius:999px; background:rgba(58,200,255,0.08); border:1px solid rgba(58,200,255,0.2); color:var(--accent-2); position:relative; z-index:1; }
+  .xcard .cc-scope{ font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.08em; opacity:0.85; position:relative; z-index:1; }
+  .xcard .cc-venue{ margin-top:16px; font-size:12px; color:var(--text-faint); font-family:'JetBrains Mono',monospace; position:relative; z-index:1; }
+  .xcard-top-border{ position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--accent), transparent); z-index:1; }
+
+  /* ===================== PROJECTS ===================== */
+  .proj-stage{
+    display:flex; gap:26px; overflow-x:auto; scroll-snap-type:x mandatory;
+    padding-block:12px 30px; scrollbar-width:none;
+    padding-inline: 50vw;
+    scroll-padding-inline: 50vw;
+    mask-image:linear-gradient(90deg, transparent 0, black 2%, black 98%, transparent 100%);
+    -webkit-mask-image:linear-gradient(90deg, transparent 0, black 2%, black 98%, transparent 100%);
+  }
+  .proj-stage::-webkit-scrollbar{ display:none; }
+
+  .proj-card{ scroll-snap-align:center; flex-shrink:0; padding:0; overflow:hidden; transition:transform 0.3s ease; }
+  .proj-card.no-media{ min-width:min(560px, 86vw); max-width:min(560px, 86vw); }
+  .proj-card:not(.no-media){ min-width:min(380px, 82vw); max-width:min(380px, 82vw); }
+
+  .proj-full{ display:none; padding:clamp(24px,3vw,38px); }
+  .proj-card.no-media .proj-full{ display:block; }
+  .proj-full .pf-eyebrow{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent-2); letter-spacing:0.08em; text-transform:uppercase; }
+  .proj-full h3{ margin-top:10px; font-size:23px; }
+  .proj-full .pf-date{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--text-faint); margin-top:6px; }
+  .proj-full ul{ list-style:none; margin-top:18px; }
+  .proj-full li{ position:relative; padding-left:18px; margin-bottom:9px; color:var(--text-dim); font-size:14px; }
+  .proj-full li::before{ content:"›"; position:absolute; left:0; color:var(--accent); font-weight:700; }
+  .proj-full .pf-tags{ margin-top:18px; display:flex; gap:8px; flex-wrap:wrap; }
+  .proj-full .pf-tags span{ font-family:'JetBrains Mono',monospace; font-size:11px; padding:5px 11px; border-radius:999px; background:rgba(58,200,255,0.08); border:1px solid rgba(58,200,255,0.22); color:var(--accent-2); }
+  .pf-media-note{ margin-top:16px; padding:12px 14px; border-radius:12px; border:1.5px dashed var(--glass-border); color:var(--text-faint); font-family:'JetBrains Mono',monospace; font-size:10.5px; text-align:center; }
+
+  .pf-links, .pd-links{ margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; }
+  .pf-links a, .pd-links a{ display:inline-flex; align-items:center; gap:7px; padding:9px 15px; border-radius:999px; font-size:12.5px; font-weight:600; background:rgba(255,255,255,0.03); border:1px solid var(--glass-border); color:var(--text); transition:all 0.2s ease; }
+  .pf-links a:hover, .pd-links a:hover{ border-color:var(--glass-border-hi); background:rgba(58,200,255,0.1); }
+
+  .proj-thumb{ display:none; position:relative; aspect-ratio:4/3; overflow:hidden; }
+  .proj-card:not(.no-media) .proj-thumb{ display:block; }
+  .thumb-slide{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; color:var(--text-faint); font-family:'JetBrains Mono',monospace; font-size:11.5px; text-align:center; padding:16px; background:radial-gradient(circle at 30% 20%, rgba(58,200,255,0.12), transparent 60%), rgba(255,255,255,0.02); opacity:1; transition:opacity 0.6s ease; }
+  .thumb-slide img{ width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+  .proj-eyebrow{ position:absolute; top:12px; left:12px; z-index:3; font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:5px 11px; border-radius:999px; background:rgba(5,10,20,0.55); border:1px solid rgba(255,255,255,0.15); color:var(--accent-2); backdrop-filter:blur(6px); }
+  .proj-plus, .proj-back{ position:absolute; top:12px; right:12px; z-index:3; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; background:rgba(5,10,20,0.55); border:1px solid rgba(255,255,255,0.18); color:var(--text); backdrop-filter:blur(6px); transition:background 0.2s ease; }
+  .proj-plus:hover, .proj-back:hover{ background:rgba(58,200,255,0.35); }
+  .proj-card.is-clone .proj-plus{ pointer-events:none; }
+  .proj-back{ position:static; margin-bottom:14px; }
+  .proj-caption{ display:none; padding:18px 20px 22px; }
+  .proj-card:not(.no-media) .proj-caption{ display:block; }
+  .proj-caption h3{ font-size:16.5px; line-height:1.3; }
+  .proj-caption .pc-date{ margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-faint); }
+  .proj-detail{ display:none; padding:20px 22px 26px; }
+  .proj-card.is-expanded .proj-caption{ display:none; }
+  .proj-card.is-expanded .proj-detail{ display:block; }
+  .proj-card.is-expanded .proj-thumb{ display:none; }
+  .proj-detail h3{ font-size:17px; }
+  .proj-detail .pd-date{ margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-faint); }
+  .proj-detail ul{ list-style:none; margin-top:16px; }
+  .proj-detail li{ position:relative; padding-left:18px; margin-bottom:8px; color:var(--text-dim); font-size:13.5px; }
+  .proj-detail li::before{ content:"›"; position:absolute; left:0; color:var(--accent); font-weight:700; }
+  .proj-detail .pd-tags{ margin-top:16px; display:flex; gap:8px; flex-wrap:wrap; }
+  .proj-detail .pd-tags span{ font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:5px 11px; border-radius:999px; background:rgba(58,200,255,0.08); border:1px solid rgba(58,200,255,0.22); color:var(--accent-2); }
+
+  .proj-dots{ display:flex; justify-content:center; gap:8px; margin-top:8px; }
+  .proj-dots span{ width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,0.15); transition:all 0.25s ease; cursor:pointer; }
+  .proj-dots span.active{ background:var(--accent); width:22px; border-radius:6px; }
+
+  /* ===================== SKILLS — label + pill rows, like reference ===================== */
+  #skills{ min-height:auto; padding:90px 0 60px; }
+  #skills .section-head{ margin-bottom:30px; }
+  .skills-grid{ display:flex; flex-direction:column; gap:9px; }
+  .skill-row{ display:flex; align-items:flex-start; gap:22px; }
+  .skill-cat-label{ min-width:150px; flex-shrink:0; padding-top:8px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.09em; }
+  .skill-pills{ display:flex; flex-wrap:wrap; gap:9px; flex:1; }
+  .skill-tag{ position:relative; padding:7px 13px; border-radius:10px; font-size:12px; font-weight:500; cursor:default; display:flex; align-items:center; gap:8px; transition:all 0.25s ease; }
+  .skill-tag:hover{ border-color:var(--glass-border-hi); background:rgba(58,200,255,0.08); transform:translateY(-2px); }
+  .skill-tooltip{ position:absolute; bottom:calc(100% + 10px); left:50%; transform:translateX(-50%) translateY(6px); min-width:190px; padding:12px 14px; border-radius:12px; opacity:0; pointer-events:none; transition:all 0.2s ease; z-index:20; text-align:left; }
+  .skill-tag:hover .skill-tooltip{ opacity:1; transform:translateX(-50%) translateY(0); }
+  .skill-tooltip .st-level{ font-size:12.5px; font-weight:700; color:var(--accent-2); }
+  .skill-tooltip .st-bar{ margin-top:8px; height:5px; border-radius:4px; background:rgba(255,255,255,0.08); overflow:hidden; }
+  .skill-tooltip .st-bar-fill{ height:100%; background:linear-gradient(90deg, var(--accent-dim), var(--accent)); border-radius:4px; }
+  .skill-tooltip .st-desc{ margin-top:8px; font-size:11.5px; color:var(--text-dim); line-height:1.4; }
+  @media (max-width:700px){ .skill-row{ flex-direction:column; gap:8px; } .skill-cat-label{ padding-top:0; } }
+
+  .edu-grid{ display:grid; grid-template-columns:1fr; gap:14px; margin-top:14px; }
+  .edu-card{ display:grid; grid-template-columns:60% 40%; overflow:hidden; position:relative; height:150px; }
+  .edu-photo{ width:100%; height:150px; overflow:hidden; border-right:1px solid var(--glass-border); display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.015); }
+  .edu-photo img{ display:block; width:100%; height:100%; object-fit:cover; }
+ justify-content:center; gap:6px; color:var(--text-faint); font-family:'JetBrains Mono',monospace; font-size:10.5px; text-align:center; padding:14px; background:rgba(255,255,255,0.015); }
+  .edu-info{ padding:18px 22px; display:flex; flex-direction:column; justify-content:center; }
+  .edu-info .ei-date{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--accent-2); letter-spacing:0.08em; }
+  .edu-info h3{ margin-top:6px; font-size:17px; }
+  .edu-info .ei-field{ margin-top:4px; color:var(--accent-2); font-size:12.5px; font-weight:500; }
+  .edu-info .ei-place{ margin-top:6px; color:var(--text-faint); font-size:11.5px; font-family:'JetBrains Mono',monospace; }
+  .edu-plus{ position:absolute; top:14px; right:14px; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(5,10,20,0.4); border:1px solid var(--glass-border); color:var(--text); font-size:14px; }
+  @media (max-width:640px){ .edu-card{ grid-template-columns:1fr; height:auto; } .edu-photo{ height:130px; border-right:none; border-bottom:1px solid var(--glass-border); } }
+  .skills-section-gap{ margin-top:26px; }
+  .skills-section-gap h2{ font-size:24px; }
+  .placeholder-note{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--text-faint); text-align:center; margin-top:8px; }
+
+  /* ===================== CONTACT ===================== */
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .vibe-card{ overflow:hidden; }
+  .vibe-head{ display:flex; justify-content:space-between; align-items:center; padding:14px 18px; border-bottom:1px solid var(--glass-border); }
+  .vibe-head .vh-label{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-faint); letter-spacing:0.1em; text-transform:uppercase; }
+  .vibe-body{ padding:18px; }
+  .vibe-body iframe{ width:100%; border-radius:12px; border:none; }
+  .vibe-note{ margin-top:10px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--text-faint); }
+  .quote-card{ padding:32px 28px; display:flex; flex-direction:column; justify-content:center; min-height:160px; margin-top:20px; }
+  .quote-mark{ font-size:26px; color:var(--accent); opacity:0.6; }
+  .quote-text{ font-size:16.5px; font-style:italic; color:var(--text); line-height:1.5; min-height:80px; transition:opacity 0.3s ease; }
+  .quote-author{ margin-top:14px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent-2); }
+  .note-card{ padding:clamp(22px,3vw,34px); display:flex; flex-direction:column; }
+  .note-card .nc-label{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:18px; }
+  .field{ width:100%; background:transparent; border:none; border-bottom:1px solid var(--glass-border); color:var(--text); font-family:'Inter',sans-serif; font-size:14.5px; padding:12px 4px; margin-bottom:6px; transition:border-color 0.2s ease; }
+  .field:focus{ outline:none; border-bottom-color:var(--accent); }
+  .field::placeholder{ color:var(--text-faint); }
+  textarea.field{ resize:vertical; min-height:80px; font-family:'Inter',sans-serif; }
+  .note-submit{ margin-top:18px; align-self:flex-end; width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg, var(--accent), var(--accent-dim)); color:var(--accent-ink); border:none; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:transform 0.2s ease; }
+  .note-submit:hover{ transform:scale(1.06); }
+  .social-row{ margin-top:26px; padding:10px; border-radius:999px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:space-between; }
+  .social-row .sr-title{ font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; padding-left:14px; }
+  /* LET'S DO THIS: smooth icon-first social buttons */
+  .social-row .sr-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .social-row .sr-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    width: 44px;
+    height: 44px;
+    padding: 0 11px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    white-space: nowrap;
+    transition:
+      width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      padding 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      gap 0.35s ease,
+      border-color 0.3s ease,
+      background 0.3s ease;
+  }
+  
+  .social-row .social-icon {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    display: grid;
+    place-items: center;
+  }
+
+  .social-row .social-icon svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  .social-row .social-label {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition:
+      max-width 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.25s ease 0.12s;
+  }
+
+  /* Expand gently to a fixed width instead of width:auto */
+  .social-row .sr-links a:hover,
+  .social-row .sr-links a:focus-visible {
+    min-width: 44px;
+    padding: 11px 16px 11px 11px;
+    gap: 8px;
+    border-color: var(--glass-border-hi);
+    background: rgba(58, 200, 255, 0.1);
+    outline: none;
+  }
+
+  .social-row .sr-links a:nth-child(1):hover,
+  .social-row .sr-links a:nth-child(1):focus-visible {
+    width: 116px;
+  }
+
+  .social-row .sr-links a:nth-child(2):hover,
+  .social-row .sr-links a:nth-child(2):focus-visible {
+    width: 96px;
+  }
+
+  .social-row .sr-links a:nth-child(3):hover,
+  .social-row .sr-links a:nth-child(3):focus-visible {
+    width: 116px;
+  }
+
+  .social-row .sr-links a:nth-child(4):hover,
+  .social-row .sr-links a:nth-child(4):focus-visible {
+    width: 132px;
+  }
+
+  .social-row .sr-links a:hover .social-label,
+  .social-row .sr-links a:focus-visible .social-label {
+    max-width: 130px;
+    opacity: 1;
+  }
+
+  .social-row .sr-email {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dim)) !important;
+    color: var(--accent-ink) !important;
+    border-color: transparent !important;
+  }
+
+  .social-row .sr-email:hover,
+  .social-row .sr-email:focus-visible {
+    background: linear-gradient(135deg, var(--accent-2), var(--accent)) !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .social-row .sr-links a,
+    .social-row .social-label {
+      transition: none;
+    }
+  }
+
+  @media (max-width:800px){ .contact-grid{ grid-template-columns:1fr; } .social-row{ flex-direction:column; align-items:flex-start; border-radius:22px; } }
+
+  footer.site-footer{ padding:36px 0 60px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint); }
+  footer.site-footer b{ color:var(--accent-2); }
+  /* ===================== MOBILE OVERRIDES (desktop untouched) ===================== */
+  @media (max-width:760px){
+    /* disable forced section-snap on touch/mobile */
+    .snap-container{ scroll-snap-type:none; }
+    section, header.hero{ scroll-snap-align:none; scroll-snap-stop:normal; }
+
+    /* HOME — stop the 5cm desktop inset from eating all the width */
+    .full-left{ padding-left:22px; padding-right:22px; }
+    header.hero{ padding-top:calc(var(--nav-h) + 18px); padding-bottom:36px; }
+    .hero-name{ font-size:clamp(36px,11vw,52px); }
+    .hero-cursive{ font-size:clamp(22px,7vw,30px); margin-top:-10px; }
+    .greet-line{ font-size:14px; }
+    .hero-stats{ margin-top:28px; gap:22px; }
+
+    /* ABOUT — compact single column, small photo */
+    .wrap{ padding:0 20px; }
+    section{ padding:60px 0; }
+    .about-card{ padding:18px; gap:16px; }
+    .about-photo{ aspect-ratio:auto; height:130px; }
+    .about-text p{ font-size:14px; margin-bottom:12px; }
+    .section-head{ margin-bottom:28px; }
+
+    /* EXPERIENCE — vertical stacked list like the reference, no auto-scroll/side arrows */
+    .marquee-outer{ padding:0; }
+    .marquee-wrap{ mask-image:none; -webkit-mask-image:none; overflow:visible; }
+    .marquee-track{ flex-direction:column; overflow:visible; padding:4px 0; }
+    .xcard{ min-width:100%; max-width:100%; }
+    .side-arrow[data-marq]{ display:none; }
+
+    /* PROJECTS — tighter, less empty space */
+    .proj-card.no-media{ min-width:88vw; max-width:88vw; }
+    .proj-full{ padding:18px; }
+    .proj-full .pf-eyebrow{ font-size:10px; }
+    .proj-full h3{ font-size:18px; margin-top:6px; }
+    .proj-full .pf-date{ margin-top:3px; font-size:10.5px; }
+    .proj-full ul{ margin-top:10px; }
+    .proj-full li{ margin-bottom:6px; font-size:13px; }
+    .proj-full .pf-tags{ margin-top:10px; }
+    .pf-links{ margin-top:10px; }
+    .pf-media-note{ margin-top:10px; padding:9px 10px; font-size:9.5px; }
+    #projects .side-arrow{ width:36px; height:36px; font-size:13px; }
+    #projects .side-arrow.side-left{ left:2px; }
+    #projects .side-arrow.side-right{ right:2px; }
+
+    /* SKILLS — real edge padding, tighter rows */
+    #skills{ padding:60px 0 40px; }
+    .skills-grid{ gap:14px; }
+    .skill-row{ flex-direction:column; gap:6px; }
+    .skill-cat-label{ padding-top:0; }
+    .skill-tag{ padding:6px 11px; font-size:11.5px; }
+    .skills-section-gap{ margin-top:20px; }
+    .edu-card{ grid-template-columns:1fr; height:auto; }
+    .edu-photo{ height:120px; border-right:none; border-bottom:1px solid var(--glass-border); }
+  }
+  /* ===================== REFERENCE SECTION + PROJECT CARD OVERRIDES ===================== */
+  html[data-theme="dark"] #experience,
+  html[data-theme="dark"] #skills{
+    background:rgba(9,10,15,0.94);
+  }
+  #projects .proj-stage{
+    gap:22px;
+    padding-inline:max(7vw,55px);
+  }
+  #projects .proj-card,
+  #projects .proj-card.no-media,
+  #projects .proj-card:not(.no-media){
+    position:relative;
+    display:block;
+    width:min(560px,86vw);
+    min-width:min(560px,86vw);
+    max-width:min(560px,86vw);
+    height:420px;
+    min-height:420px;
+    padding:0;
+  }
+  #projects .proj-thumb,
+  #projects .proj-card:not(.no-media) .proj-thumb{
+    display:block;
+    position:absolute;
+    inset:0;
+    height:100%;
+    aspect-ratio:auto;
+  }
+  #projects .proj-card.no-media .proj-thumb{
+    display:block;
+  }
+  #projects .proj-card.no-media .proj-full{
+    display:none;
+  }
+  #projects .proj-caption,
+  #projects .proj-card:not(.no-media) .proj-caption{
+    display:flex;
+    position:absolute;
+    z-index:2;
+    right:0;
+    bottom:0;
+    left:0;
+    flex-direction:column;
+    gap:5px;
+    padding:74px 24px 22px;
+    background:linear-gradient(180deg,transparent,rgba(6,7,12,0.96) 64%);
+  }
+  #projects .proj-caption h3{ font-size:20px; }
+  #projects .proj-detail{
+    position:absolute;
+    inset:0;
+    z-index:8;
+    overflow:auto;
+    padding:24px 26px 30px;
+    background:rgba(8,9,14,0.97);
+    backdrop-filter:blur(18px);
+  }
+  #projects .proj-card.is-expanded .proj-thumb,
+  #projects .proj-card.is-expanded .proj-caption{ display:none; }
+  #projects .proj-card.is-expanded .proj-detail{ display:block; }
+  #projects .proj-card.is-expanded .proj-full{ display:none; }
+  #projects .proj-media-strip{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+  #projects .proj-media-thumb{
+    position:relative;
+    width:96px;
+    height:68px;
+    overflow:hidden;
+    padding:0;
+    border:1px solid var(--glass-border);
+    border-radius:9px;
+    cursor:pointer;
+    background:rgba(255,255,255,0.04);
+  }
+  #projects .proj-media-thumb img,
+  #projects .proj-media-thumb video,
+  #projects .proj-media-thumb iframe {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+  }
+
+  #projects .proj-media-thumb iframe {
+    pointer-events: none;
+  }
+
+  #projects .proj-media-thumb span{ position:absolute; right:4px; bottom:3px; padding:2px 4px; border-radius:4px; color:#fff; background:rgba(0,0,0,0.65); font:9px 'JetBrains Mono',monospace; }
+  #projects .proj-media-cover{
+    position:absolute;
+    inset:0;
+    z-index:20;
+    display:none;
+    padding:58px 18px 18px;
+    background:rgba(3,4,8,0.98);
+  }
+  #projects .proj-card.media-open .proj-media-cover{ display:block; }
+  #projects .proj-media-cover img,
+  #projects .proj-media-cover video,
+  #projects .proj-media-cover iframe {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border: 0;
+  }
+
+  #projects .proj-media-close{
+    position:absolute;
+    top:14px;
+    left:14px;
+    z-index:2;
+    padding:8px 12px;
+    border:1px solid var(--glass-border);
+    border-radius:999px;
+    color:var(--text);
+    background:rgba(5,10,20,0.72);
+    cursor:pointer;
+  }
+  @media (max-width:760px){
+    #projects .proj-card,
+    #projects .proj-card.no-media,
+    #projects .proj-card:not(.no-media){ width:86vw; min-width:86vw; max-width:86vw; height:420px; min-height:420px; }
+  }
+  /* ===================== FINAL LOOP / TOOLTIP REFINEMENTS ===================== */
+  #experience .marquee-track,
+  #projects .proj-stage{
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  #experience .marquee-track::-webkit-scrollbar,
+  #projects .proj-stage::-webkit-scrollbar{ display:none; width:0; height:0; }
+  .skill-tooltip{
+    background:rgba(7,8,14,0.97);
+    border:1px solid rgba(255,255,255,0.28);
+    box-shadow:0 16px 38px rgba(0,0,0,0.6);
+    backdrop-filter:blur(10px);
+  }
+  html[data-theme="light"] .skill-tooltip{
+    background:rgba(255,255,255,0.98);
+    border-color:rgba(15,15,25,0.28);
+    box-shadow:0 16px 38px rgba(0,0,0,0.22);
+  }
+  /* ===================== FINAL REFERENCE REFINEMENTS ===================== */
+  #experience,
+  #skills{
+    width:100%;
+    max-width:none;
+    margin:0;
+    border-radius:0;
+    background:#000;
+  }
+  #experience .wrap,
+  #skills > .section-head,
+  #skills > .skills-grid,
+  #skills > .placeholder-note,
+  #skills > .skills-section-gap,
+  #skills > .edu-grid{
+    width:min(1100px,calc(100% - 110px));
+    max-width:1100px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  #experience .section-head,
+  #skills .section-head{ margin-left:auto; margin-right:auto; }
+  html[data-theme="light"] #experience,
+  html[data-theme="light"] #skills{ background:#fff; }
+  html[data-theme="light"] #experience h2,
+  html[data-theme="light"] #skills h2{ color:#111118; }
+  html[data-theme="light"] #experience p,
+  html[data-theme="light"] #skills p{ color:#45454d; }
+  #experience .marquee-track{
+    scrollbar-width:thin;
+    scrollbar-color:var(--accent) #050505;
+  }
+  #experience .marquee-track::-webkit-scrollbar,
+  #projects .proj-stage::-webkit-scrollbar{ display:block; height:7px; }
+  #experience .marquee-track::-webkit-scrollbar-track,
+  #projects .proj-stage::-webkit-scrollbar-track{ background:#050505; border-radius:99px; }
+  #experience .marquee-track::-webkit-scrollbar-thumb,
+  #projects .proj-stage::-webkit-scrollbar-thumb{ background:linear-gradient(90deg,var(--accent-dim),var(--accent)); border:2px solid #050505; border-radius:99px; }
+  .xcard{
+    min-width:340px;
+    max-width:340px;
+    height:330px;
+    min-height:330px;
+    padding:25px;
+    border-radius:17px;
+    background:linear-gradient(145deg,rgba(13,14,20,.96),rgba(37,28,51,.96));
+  }
+  html[data-theme="light"] .xcard{ background:linear-gradient(145deg,#f5f5f7,#e7e7ec); }
+  #projects .proj-stage{
+    scroll-snap-type:none;
+    scrollbar-width:thin;
+    scrollbar-color:var(--accent) #050505;
+  }
+  #projects .proj-card,
+  #projects .proj-card.no-media,
+  #projects .proj-card:not(.no-media){
+    width:min(500px,78vw);
+    min-width:min(500px,78vw);
+    max-width:min(500px,78vw);
+    height:500px;
+    min-height:500px;
+  }
+  #projects .proj-caption h3,
+  #projects .proj-caption .pc-date,
+  #projects .proj-eyebrow{ color:#fff; }
+  html[data-theme="light"] #projects .proj-caption h3,
+  html[data-theme="light"] #projects .proj-caption .pc-date,
+  html[data-theme="light"] #projects .proj-eyebrow{ color:#fff; }
+  html[data-theme="light"] #projects .proj-eyebrow{ background:rgba(0,0,0,.58); border-color:rgba(255,255,255,.35); }
+  #projects .proj-back{
+    position:sticky;
+    top:0;
+    left:0;
+    right:auto;
+    z-index:10;
+    display:inline-flex;
+    margin:0 0 14px;
+    padding:8px 14px;
+    width:auto;
+    height:auto;
+    border-radius:999px;
+    font-size:12px;
+  }
+  #projects .proj-detail{ padding-top:24px; }
+  #projects .proj-media-close{ font-size:12px; }
+  @media (max-width:760px){
+    #experience .wrap,
+    #skills > .section-head,
+    #skills > .skills-grid,
+    #skills > .placeholder-note,
+    #skills > .skills-section-gap,
+    #skills > .edu-grid{ width:calc(100% - 44px); }
+    #projects .proj-card,
+    #projects .proj-card.no-media,
+    #projects .proj-card:not(.no-media){ width:82vw; min-width:82vw; max-width:82vw; height:82vw; min-height:360px; }
+  }
+  /* ===================== FINAL LOOP VISIBILITY OVERRIDES ===================== */
+  #experience .marquee-track,
+  #projects .proj-stage{ scrollbar-width:none !important; -ms-overflow-style:none; }
+  #experience .marquee-track::-webkit-scrollbar,
+  #projects .proj-stage::-webkit-scrollbar{ display:none !important; width:0 !important; height:0 !important; }
+  .skill-tooltip{ background:rgba(5,6,12,0.98) !important; border:1px solid rgba(255,255,255,0.34) !important; box-shadow:0 16px 38px rgba(0,0,0,0.65) !important; }
+  html[data-theme="light"] .skill-tooltip{ background:rgba(255,255,255,0.99) !important; border-color:rgba(15,15,25,0.3) !important; box-shadow:0 16px 38px rgba(0,0,0,0.25) !important; }
+
+  /* ===================== EXPERIENCE CARD IMAGE PATH SETUP ===================== */
+  .xcard{ background-image:linear-gradient(180deg,rgba(4,7,14,.12),rgba(4,7,14,.94)),var(--card-bg,none); background-size:cover; background-position:center; }
+  .xcard > *{ position:relative; z-index:2; }
+  .xcard::after{ content:""; position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(180deg,rgba(3,5,12,.08),rgba(3,5,12,.94)); }
+  #skills .edu-info{ padding:18px 22px 18px 32px !important; }
+  #contact .section-head h2{ margin-top:1em; }
+  /* ===================== EXPERIENCE CARDS — same image/fade mechanism as Projects ===================== */
+  #experience .xcard{
+    background-image:var(--card-bg,none) !important;
+    background-size:cover !important;
+    background-position:center !important;
+    color:#fff !important;
+  }
+  
+  #experience .xcard > *{
+    position:relative;
+    z-index:2;
+  }
+  
+  #experience .xcard::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    background:linear-gradient(
+      180deg,
+      transparent,
+      rgba(6,7,12,.96) 64%
+    ) !important;
+  }
+  
+  #experience .xcard h4,
+  #experience .xcard p,
+  #experience .xcard .tc-date,
+  #experience .xcard .cc-scope,
+  #experience .xcard .cc-venue,
+  #experience .xcard .tc-tag{
+    color:#fff !important;
+  }
+  /* Mobile-only Experience cards: compact, centered, and expandable */
+  @media (max-width:760px){
+    /* Center the Experience cards themselves */
+    #experience .marquee-outer{
+      padding-left:0 !important;
+      padding-right:0 !important;
+    }
+  
+    #experience .marquee-track{
+      padding-left:22px !important;
+      padding-right:22px !important;
+      box-sizing:border-box;
+    }
+  
+    /* Compact card: show only the title */
+    #experience .xcard{
+      position:relative;
+      width:calc(100vw - 44px) !important;
+      min-width:calc(100vw - 44px) !important;
+      max-width:calc(100vw - 44px) !important;
+      height:82px !important;
+      min-height:82px !important;
+      padding:22px 58px 18px 18px !important;
+      display:block !important;
+      box-sizing:border-box;
+      transition:height .28s ease, min-height .28s ease, padding .28s ease;
+    }
+  
+    #experience .xcard h4{
+      display:block !important;
+      width:100% !important;
+      max-width:none !important;
+      margin:0 !important;
+      font-size:14px !important;
+      line-height:1.25 !important;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    /* Hide details while the card is compact */
+    #experience .xcard .tc-date,
+    #experience .xcard .cc-scope,
+    #experience .xcard p,
+    #experience .xcard .tc-tag,
+    #experience .xcard .cc-venue{
+      display:none !important;
+    }
+
+    /* Projects-style plus button */
+    #experience .xcard .exp-plus{
+      position:absolute;
+      top:12px;
+      right:12px;
+      z-index:5;
+      width:34px;
+      height:34px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:50%;
+      background:rgba(5,10,20,.55);
+      color:#fff;
+      font:16px/1 Inter,sans-serif;
+      cursor:pointer;
+      backdrop-filter:blur(6px);
+    }
+
+    /* Expanded card: restore the normal organized content layout */
+    #experience .xcard.mobile-expanded{
+      height:330px !important;
+      min-height:330px !important;
+      padding:25px !important;
+      display:block !important;
+    }
+
+    #experience .xcard.mobile-expanded h4{
+      display:block !important;
+      width:100% !important;
+      max-width:100% !important;
+      margin-top:10px !important;
+      font-size:17px !important;
+      line-height:1.3 !important;
+      white-space:normal !important;
+      overflow:visible !important;
+    }
+
+    #experience .xcard.mobile-expanded .tc-date,
+    #experience .xcard.mobile-expanded .cc-scope,
+    #experience .xcard.mobile-expanded p,
+    #experience .xcard.mobile-expanded .tc-tag,
+    #experience .xcard.mobile-expanded .cc-venue{
+      display:block !important;
+      width:100% !important;
+      max-width:100% !important;
+      white-space:normal !important;
+      overflow:visible !important;
+    }
+  
+    #experience .xcard.mobile-expanded p{
+      margin-top:10px !important;
+      line-height:1.45 !important;
+    }
+  
+    #experience .xcard.mobile-expanded .tc-tag,
+    #experience .xcard.mobile-expanded .cc-venue{
+      margin-top:16px !important;
+    }
+  }
+  /* PROJECTS LIGHT THEME VISIBILITY FIX */
+  #projects .proj-card .proj-plus,
+  #projects .proj-card .proj-back{
+    color:#fff !important;
+    background:rgba(5,10,20,.72) !important;
+    border-color:rgba(255,255,255,.35) !important;
+  }
+
+  #projects .proj-card .proj-caption,
+  #projects .proj-card .proj-caption h3,
+  #projects .proj-card .proj-caption .pc-date,
+  #projects .proj-card .proj-eyebrow,
+  #projects .proj-card .proj-detail,
+  #projects .proj-card .proj-detail h3,
+  #projects .proj-card .proj-detail .pd-date,
+  #projects .proj-card .proj-detail li,
+  #projects .proj-card .proj-full,
+  #projects .proj-card .proj-full h3,
+  #projects .proj-card .proj-full .pf-date,
+  #projects .proj-card .proj-full li{
+    color:#fff !important;
+  }
+
+  #projects .proj-card .proj-detail{
+    background:rgba(8,9,14,.97) !important;
+  }
+  /* Make Project action buttons visible in Light mode */
+  #projects .proj-card .pf-links a,
+  #projects .proj-card .pd-links a{
+    color:#fff !important;
+    background:rgba(5,10,20,.82) !important;
+    border:1px solid rgba(255,255,255,.28) !important;
+    opacity:1 !important;
+    text-shadow:0 1px 2px rgba(0,0,0,.45);
+  }
+  
+  #projects .proj-card .pf-links a:hover,
+  #projects .proj-card .pd-links a:hover{
+    color:#fff !important;
+    background:rgba(58,200,255,.28) !important;
+    border-color:rgba(255,255,255,.5) !important;
+  }
+  /* Requested accent-responsive button design */
+  .hero-actions > a.btn-ghost[href="#contact"],
+  #about .about-links > a.btn-ghost[href^="mailto:"],
+  #about .about-links > a.btn-ghost#aboutLinkedin{
+    color:#fafafa !important;
+    text-transform:uppercase;
+    padding:10px 20px;
+    border:2px solid var(--accent) !important;
+    border-radius:10px;
+    background:transparent !important;
+    box-shadow:3px 3px var(--accent);
+    cursor:pointer;
+    transition:transform .12s ease,
+               box-shadow .12s ease,
+               background .2s ease,
+               color .2s ease;
+  }
+  
+  /* Hover state */
+  .hero-actions > a.btn-ghost[href="#contact"]:hover,
+  #about .about-links > a.btn-ghost[href^="mailto:"]:hover,
+  #about .about-links > a.btn-ghost#aboutLinkedin:hover{
+    color:#fff !important;
+    background:transparent !important;
+    border-color:var(--accent) !important;
+  }
+
+  /* Pressed state */
+  .hero-actions > a.btn-ghost[href="#contact"]:active,
+  #about .about-links > a.btn-ghost[href^="mailto:"]:active,
+  #about .about-links > a.btn-ghost#aboutLinkedin:active{
+    box-shadow:none;
+    transform:translate(3px,3px);
+  }
+
+  /* Only the hero Get in touch text becomes black in Light mode */
+  html[data-theme="light"] .hero-actions > a.btn-ghost[href="#contact"]{
+    color:#000 !important;
+  }
+  /* Metallic-silver shadow below Download Resume */
+  .hero-actions > a.btn-solid[href*="Resume"]{
+    box-shadow:3px 3px #c0c0c0 !important;
+  }
+  /* EXPERIENCE ONLY: remove side blocks and edge fading */
+  #experience .marquee-outer {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  #experience .marquee-wrap {
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+  }
+  /* PROJECTS ONLY: remove the faded edges */
+  #projects .proj-stage {
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+  }
+  /* About-card Email and LinkedIn match the Light-theme name color */
+  html[data-theme="light"] #about .about-links > a.btn-ghost[href^="mailto:"],
+  html[data-theme="light"] #about .about-links > a.btn-ghost#aboutLinkedin,
+  html[data-theme="light"] #about .about-links > a.btn-ghost[href^="mailto:"]:hover,
+  html[data-theme="light"] #about .about-links > a.btn-ghost#aboutLinkedin:hover {
+    color: #0b1830 !important;
+  }
+  /* PROJECTS: remove the 50vw side padding that clips card 4 */
+  #projects .proj-stage {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    scroll-padding-left: 0 !important;
+    scroll-padding-right: 0 !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+  }
+  /* Download Resume: tray-style icon */
+  .hero-actions .download-tray-icon {
+    width: 1.2em;
+    height: 1.2em;
+    flex: 0 0 auto;
+    display: block;
+    fill: currentColor;
+  }
+   
+</style>
+</head>
+<body class="snap-container">
+
+<div id="canvas-container"></div>
+
+<!-- ============ NAV ============ -->
+<nav class="navbar">
+  <div class="nav-inner glass">
+    <div class="nav-links" id="navLinks">
+      <a href="#home" class="active" data-nav>Home</a>
+      <a href="#about" data-nav>About</a>
+      <a href="#experience" data-nav>Experience</a>
+      <a href="#projects" data-nav>Projects</a>
+      <a href="#skills" data-nav>Skills</a>
+    </div>
+    <a href="#contact" class="nav-cta">Get in touch</a>
+    <div class="nav-wrap-pos">
+      <button class="theme-btn" id="themeBtn" aria-label="Theme settings">◐</button>
+      <div class="theme-dropdown glass" id="themeDropdown">
+        <div>
+          <div class="td-row-label">Mode</div>
+          <div class="td-mode-row">
+            <button class="td-mode-btn active" data-mode="dark">Dark</button>
+            <button class="td-mode-btn" data-mode="light">Light</button>
+          </div>
+        </div>
+        <div>
+          <div class="td-row-label">Accent</div>
+          <div class="td-color-row" id="accentRow"></div>
+        </div>
+      </div>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+  </div>
+</nav>
+<div class="mobile-menu glass" id="mobileMenu">
+  <a href="#home" data-nav>Home</a>
+  <a href="#about" data-nav>About</a>
+  <a href="#experience" data-nav>Experience</a>
+  <a href="#projects" data-nav>Projects</a>
+  <a href="#skills" data-nav>Skills</a>
+  <a href="#contact" data-nav>Get in touch</a>
+</div>
+
+<main>
+
+  <!-- ============ HOME ============ -->
+  <header class="hero full-left" id="home">
+    <div class="hero-inner reveal-anim reveal-fade in-view" id="heroReveal">
+      <div class="greet-line"><span class="greet-word" id="greetWord"></span>&nbsp;, I am</div>
+      <div class="hero-name-block">
+        <h1 class="hero-name">Ignatius Nigel<span class="period">.</span></h1>
+        <span class="hero-cursive">Aerospace Engineer</span>
+      </div>
+      <p class="hero-desc">
+        I design, simulate, and fly things — from <b>CFD analysis</b> of supersonic nozzles to
+        <b>fixed-wing UAVs</b> carrying real payloads, to <b>orbital collision-avoidance</b> systems.
+        Every project goes from CAD to a physical build I've tested myself.
+      </p>
+      <div class="hero-actions">
+        <a href="assets/docs/IgnatiusNigelResume.pdf" target="_blank" rel="noopener" class="btn btn-solid">
+          <svg class="download-tray-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M11 3h2v10.17l3.59-3.58L18 11l-6 6-6-6 1.41-1.41L11 13.17V3Z" />
+            <path d="M4 19h16v2H4z" />
+          </svg>
+          <span>Download Resume</span>
+        </a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">4+</div><div class="lbl">Major Projects</div></div>
+        <div class="hero-stat"><div class="num">5</div><div class="lbl">Aeromodelling Comps</div></div>
+        <div class="hero-stat"><div class="num">1</div><div class="lbl">Published Paper</div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" class="wrap reveal-anim reveal-left">
+    <div class="section-head"><h2>About Me</h2></div>
+    <div class="about-card-shell">
+      <div class="about-card glass">
+        <div class="about-photo"><span style="font-size:28px; opacity:0.6;">◐</span><span>ADD: your photo here</span></div>
+        <div class="about-text">
+          <p>I'm <b>Ignatius Nigel</b>, an Aerospace Engineering graduate from KCG College of Technology, Chennai, with hands-on project experience across <b>CAD design, CFD analysis, composite structures, and UAV systems</b>.</p>
+          <p>I've taken multiple designs from concept through fabrication and flight-testing — from fixed-wing UAVs carrying 5&nbsp;kg payloads to vacuum-bagged composite airframes — with results validated through both simulation and physical testing.</p>
+          <p>I'm quick to pick up new tools, comfortable working independently or in a team, and I care about <b>seeing a design through to a working, flight-tested result</b> — not just a report.</p>
+          <div class="about-links">
+            <a href="mailto:nigelignatius505@gmail.com" class="btn btn-ghost">✉ Email</a>
+            <a href="#" class="btn btn-ghost" id="aboutLinkedin">in LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience" class="reveal-anim reveal-up">
+    <div class="wrap"><div class="section-head"><h2>Experience</h2><p>A timeline of the projects I've built, and the competitions I've flown in.</p></div>
+
+    <div class="exp-tabs glass">
+      <button class="exp-tab-btn active" data-tab="competitions">Competitions</button>
+      <button class="exp-tab-btn" data-tab="timeline">Project Timeline</button>
+    </div></div>
+
+<div class="exp-panel active" id="panel-competitions">
+      <div class="marquee-outer full-bleed">
+        <div class="side-arrow glass side-left" data-marq="competitions" data-dir="-1">←</div>
+        <div class="side-arrow glass side-right" data-marq="competitions" data-dir="1">→</div>
+        <div class="marquee-wrap">
+          <div class="marquee-track" id="track-competitions">
+            <div class="xcard glass" style="--card-bg:url('assets/img/competition-01.png');"><div class="xcard-top-border"></div>
+              <div class="cc-scope mono" style="color:var(--accent-2);">International</div>
+              <h4>Technoxian WRC — RC Craft Challenge</h4>
+              <p>Demonstrated strong understanding of aerodynamics and stability optimization under competitive constraints.</p>
+              <div class="cc-venue">Technoxian WRC</div>
+            </div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/competition-02.png');"><div class="xcard-top-border"></div>
+              <div class="cc-scope mono">National</div>
+              <h4>HAC'24 — Aeromodelling Competition</h4>
+              <p>Integrated payload delivery mechanisms with optimized flight control and structural efficiency.</p>
+              <div class="cc-venue">HITS, Chennai</div>
+            </div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/competition-03.png');"><div class="xcard-top-border"></div>
+              <div class="cc-scope mono">National</div>
+              <h4>Shaastra Aeromodelling Competition</h4>
+              <p>Focused on aerodynamic efficiency improvements through iterative design and testing.</p>
+              <div class="cc-venue">IIT Madras, Chennai</div>
+            </div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/competition-04.png');"><div class="xcard-top-border"></div>
+              <div class="cc-scope mono">National</div>
+              <h4>Boeing Aeromodelling Competition</h4>
+              <p>Applied mission-based design strategies emphasizing payload integration and performance optimization.</p>
+              <div class="cc-venue">IIT Madras, Chennai</div>
+            </div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/competition-05.png');"><div class="xcard-top-border"></div>
+              <div class="cc-scope mono">National</div>
+              <h4>Kurukshetra Aeromodelling Event</h4>
+              <p>Gained hands-on experience in aerodynamic analysis and real-time flight testing techniques.</p>
+              <div class="cc-venue">Anna University, Chennai</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <div class="exp-panel" id="panel-timeline">
+      <div class="marquee-outer full-bleed">
+        <div class="side-arrow glass side-left" data-marq="timeline" data-dir="-1">←</div>
+        <div class="side-arrow glass side-right" data-marq="timeline" data-dir="1">→</div>
+        <div class="marquee-wrap">
+          <div class="marquee-track" id="track-timeline">
+            <div class="xcard glass" style="--card-bg:url('assets/img/satellite-thumbnail.jpg');"><div class="xcard-top-border"></div>
+              <div class="tc-date mono">AUG 2025 – MAR 2026</div>
+              <h4>Autonomous Satellite Collision Avoidance &amp; Maneuver Optimization</h4>
+              <p>Conjunction risk framework for LEO satellites; ~8–12% improvement in maneuver timing.</p>
+              <span class="tc-tag">Published · ICCII</span>
+            </div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/nozzle-thumbnail.jpg');"><div class="xcard-top-border"></div>
+              <div class="tc-date mono">NOV 2024 – JAN 2025</div>
+              <h4>Supersonic Nozzle Flow Visualization &amp; CFD Analysis</h4>
+              <p>CFD study of C-D nozzles at Mach 1.6 / 1.8 / 2.0 using ANSYS Fluent.</p>
+              <span class="tc-tag">Simulated &amp; Validated</span>
+            </div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/rc-aircraft-thumbnail.jpg');"><div class="xcard-top-border"></div>
+              <div class="tc-date mono">NOV 2023 – OCT 2024</div>
+              <h4>RC Aircraft Design &amp; Payload Delivery Systems</h4>
+              <p>Fixed-wing UAVs carrying payloads up to 5 kg, flight-tested across 5 competitions.</p>
+              <span class="tc-tag">Flight-Tested</span>
+            </div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/composite-thumbnail.jpg');"><div class="xcard-top-border"></div>
+              <div class="tc-date mono">MAY 2024 – JUL 2024</div>
+              <h4>Structural Optimization of Airframes using Composite Materials</h4>
+              <p>Vacuum-bagged carbon fiber/fiberglass structures — 15–20% weight reduction.</p>
+              <span class="tc-tag">Fabricated</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" class="reveal-anim reveal-scale">
+    <div class="wrap"><div class="section-head"><h2>Featured Projects</h2><p>Full write-ups below. Once photos are added, each becomes a tap-to-expand card.</p></div></div>
+
+    <div class="full-bleed" style="position:relative;">
+      <div class="side-arrow glass side-left" id="projPrev">←</div>
+      <div class="side-arrow glass side-right" id="projNext">→</div>
+      <div class="proj-stage" id="projStage">
+
+        <div class="proj-card glass no-media" data-thumb="assets/img/satellite-thumbnail.jpg" data-images='["assets/img/satellite-ml-regression.png","assets/img/satellite-montecarlo.png","assets/img/satellite-maneuver.png","assets/img/satellite-tvc-prototype.png"]'>
+          <div class="proj-thumb">
+            <div class="proj-eyebrow mono">01 · Published</div>
+            <button class="proj-plus">+</button>
+            <div class="thumb-slide"><span>ADD: satellite project image/render</span></div>
+          </div>
+          <div class="proj-caption"><h3>Autonomous Satellite Collision Avoidance</h3><div class="pc-date mono">AUG 2025 – MAR 2026</div></div>
+          <div class="proj-detail">
+            <button class="proj-back">Back</button>
+            <h3>Autonomous Satellite Collision Avoidance &amp; Maneuver Optimization System</h3>
+            <div class="pd-date mono">AUG 2025 – MAR 2026</div>
+            <ul>
+              <li>Developed a conjunction risk assessment framework for LEO satellites using TLE data and orbital propagation techniques.</li>
+              <li>Implemented covariance-based uncertainty modeling for collision probability estimation.</li>
+              <li>Optimized maneuver timing by ~8–12% using Python and MATLAB simulations.</li>
+            </ul>
+            <div class="pd-tags"><span>Python</span><span>MATLAB</span><span>Orbital Mechanics</span></div>
+            <div class="pd-links">
+              <a href="https://github.com/your-username/satellite-collision-avoidance" target="_blank" rel="noopener">⌥ GitHub</a>
+              <a href="assets/docs/Final-project-Report.pdf" target="_blank" rel="noopener">📄 Final Project Report (PDF)</a>
+              <a href="assets/docs/ICCII-Published-Paper.pdf" target="_blank" rel="noopener">📰 Published Paper — 7th ICCII Conference</a>
+            </div>
+          </div>
+          <div class="proj-full">
+            <div class="pf-eyebrow">01 · Final-Year Project · Published</div>
+            <h3>Autonomous Satellite Collision Avoidance &amp; Maneuver Optimization System</h3>
+            <div class="pf-date mono">AUG 2025 – MAR 2026</div>
+            <ul>
+              <li>Developed a conjunction risk assessment framework for LEO satellites using TLE data and orbital propagation techniques.</li>
+              <li>Implemented covariance-based uncertainty modeling for collision probability estimation.</li>
+              <li>Optimized maneuver timing by ~8–12% for collision avoidance using Python and MATLAB simulations.</li>
+            </ul>
+            <div class="pf-tags"><span>Python</span><span>MATLAB</span><span>Orbital Mechanics</span></div>
+            <div class="pf-links">
+              <a href="https://github.com/your-username/satellite-collision-avoidance" target="_blank" rel="noopener">⌥ GitHub</a>
+              <a href="assets/docs/Final-project-Report.pdf" target="_blank" rel="noopener">📄 Final Project Report (PDF)</a>
+              <a href="assets/docs/ICCII-Published-Paper.pdf" target="_blank" rel="noopener">📰 Published Paper — 7th ICCII Conference</a>
+            </div>
+            <div class="pf-media-note">ADD a photo/render here later and this card becomes a tap-to-expand image card. GitHub link is a placeholder — send the repo URL whenever it's ready.</div>
+          </div>
+        </div>
+
+        <div class="proj-card glass no-media" data-thumb="assets/img/rc-aircraft-thumbnail.jpg" data-images='["assets/img/rc-hindu-photo.jpg","assets/img/technoxian-team.jpg","assets/video/rc-flight-crash.mp4","assets/video/rc-flight-success.mp4","https://fembed.co/embed/4THJ-IV_tBm6i","https://fembed.co/embed/Thrq_OTtJ-kNj"]'>
+          <div class="proj-thumb">
+            <div class="proj-eyebrow mono">02 · Flight-Tested</div>
+            <button class="proj-plus">+</button>
+            <div class="thumb-slide"><span>Thumbnail: assets/img/rc-aircraft-thumbnail.jpg</span></div>
+          </div>
+          <div class="proj-caption"><h3>RC Aircraft &amp; Payload Delivery</h3><div class="pc-date mono">NOV 2023 – OCT 2024</div></div>
+          <div class="proj-detail">
+            <button class="proj-back">Back</button>
+            <h3>RC Aircraft Design &amp; Payload Delivery Systems</h3>
+            <div class="pd-date mono">NOV 2023 – OCT 2024</div>
+            <ul>
+              <li>Designed, modeled, fabricated, and tested fixed-wing UAVs capable of carrying payloads up to 5 kg.</li>
+              <li>Created detailed CAD models and assemblies for manufacturing and testing.</li>
+              <li>Integrated payload release mechanisms and optimized structural and aerodynamic performance.</li>
+              <li>Improved flight stability and aerodynamic efficiency by 10–15% through iterative testing.</li>
+            </ul>
+            <div class="pd-tags"><span>SolidWorks</span><span>CATIA</span><span>UAV Design</span></div>
+            <div class="pd-links"><a href="https://www.thehindu.com/news/cities/chennai/chennai-aeromodelling-enthusiasts-have-their-innovations-take-to-the-skies/article68201561.ece" target="_blank" rel="noopener">📰 Featured in The Hindu</a></div>
+          </div>
+          <div class="proj-full">
+            <div class="pf-eyebrow">02 · Competition Build · Flight-Tested</div>
+            <h3>RC Aircraft Design &amp; Payload Delivery Systems</h3>
+            <div class="pf-date mono">NOV 2023 – OCT 2024</div>
+            <ul>
+              <li>Designed, modeled, fabricated, and tested fixed-wing UAVs capable of carrying payloads up to 5 kg.</li>
+              <li>Created detailed CAD models and assemblies for manufacturing and testing.</li>
+              <li>Integrated payload release mechanisms and optimized structural and aerodynamic performance.</li>
+              <li>Improved flight stability and aerodynamic efficiency by 10–15% through iterative testing.</li>
+            </ul>
+            <div class="pf-tags"><span>SolidWorks</span><span>CATIA</span><span>UAV Design</span></div>
+            <div class="pf-links"><a href="https://www.thehindu.com/news/cities/chennai/chennai-aeromodelling-enthusiasts-have-their-innovations-take-to-the-skies/article68201561.ece" target="_blank" rel="noopener">📰 Featured in The Hindu</a></div>
+            <div class="pf-media-note">RC media configured: 2 images and 2 videos in the data-images list.</div>
+          </div>
+        </div>
+
+        <div class="proj-card glass no-media" data-thumb="assets/img/nozzle-thumbnail.jpg" data-images='["assets/img/nozzle/image-01.jpg","assets/img/nozzle/image-02.jpg"]'>
+          <div class="proj-thumb">
+            <div class="proj-eyebrow mono">03 · Simulated</div>
+            <button class="proj-plus">+</button>
+            <div class="thumb-slide"><span>Thumbnail: assets/img/nozzle-thumbnail.jpg</span></div>
+          </div>
+          <div class="proj-caption"><h3>Supersonic Nozzle CFD Analysis</h3><div class="pc-date mono">NOV 2024 – JAN 2025</div></div>
+          <div class="proj-detail">
+            <button class="proj-back">Back</button>
+            <h3>Supersonic Nozzle Flow Visualization &amp; CFD Analysis</h3>
+            <div class="pd-date mono">NOV 2024 – JAN 2025</div>
+            <ul>
+              <li>Performed CFD analysis of convergent-divergent nozzles at Mach 1.6, 1.8, and 2.0 using ANSYS Fluent.</li>
+              <li>Evaluated shock-wave formation and expansion behavior.</li>
+              <li>Validated pressure and velocity contours against theoretical gas-dynamics calculations.</li>
+            </ul>
+            <div class="pd-tags"><span>ANSYS Fluent</span><span>Gas Dynamics</span></div>
+          </div>
+          <div class="proj-full">
+            <div class="pf-eyebrow">03 · Academic Project · Simulated</div>
+            <h3>Supersonic Nozzle Flow Visualization &amp; CFD Analysis</h3>
+            <div class="pf-date mono">NOV 2024 – JAN 2025</div>
+            <ul>
+              <li>Performed CFD analysis of convergent-divergent nozzles at Mach 1.6, 1.8, and 2.0 using ANSYS Fluent.</li>
+              <li>Evaluated shock-wave formation and expansion behavior.</li>
+              <li>Validated pressure and velocity contours against theoretical gas-dynamics calculations.</li>
+            </ul>
+            <div class="pf-tags"><span>ANSYS Fluent</span><span>Gas Dynamics</span></div>
+            <div class="pf-media-note">ADD a photo/contour plot here later and this card becomes a tap-to-expand image card.</div>
+          </div>
+        </div>
+
+        <div class="proj-card glass no-media" data-thumb="assets/img/composite-thumbnail.jpg" data-images='["assets/img/composite/image-01.jpg","assets/img/composite/image-02.jpg"]'>
+          <div class="proj-thumb">
+            <div class="proj-eyebrow mono">04 · Fabricated</div>
+            <button class="proj-plus">+</button>
+            <div class="thumb-slide"><span>Thumbnail: assets/img/composite-thumbnail.jpg</span></div>
+          </div>
+          <div class="proj-caption"><h3>Composite Airframe Structures</h3><div class="pc-date mono">MAY 2024 – JUL 2024</div></div>
+          <div class="proj-detail">
+            <button class="proj-back">Back</button>
+            <h3>Structural Optimization of Airframes using Composite Materials</h3>
+            <div class="pd-date mono">MAY 2024 – JUL 2024</div>
+            <ul>
+              <li>Designed, modeled, and fabricated vacuum-bagged carbon fiber and fiberglass structures.</li>
+              <li>Achieved weight reduction by 15–20% while maintaining structural integrity.</li>
+              <li>Applied composite material principles for high strength-to-weight ratio designs.</li>
+            </ul>
+            <div class="pd-tags"><span>Composite Layup</span><span>Structural Design</span></div>
+          </div>
+          <div class="proj-full">
+            <div class="pf-eyebrow">04 · Academic Project · Fabricated</div>
+            <h3>Structural Optimization of Airframes using Composite Materials</h3>
+            <div class="pf-date mono">MAY 2024 – JUL 2024</div>
+            <ul>
+              <li>Designed, modeled, and fabricated vacuum-bagged carbon fiber and fiberglass structures.</li>
+              <li>Achieved weight reduction by 15–20% while maintaining structural integrity.</li>
+              <li>Applied composite material principles for high strength-to-weight ratio designs.</li>
+            </ul>
+            <div class="pf-tags"><span>Composite Layup</span><span>Structural Design</span></div>
+            <div class="pf-media-note">ADD a photo here later and this card becomes a tap-to-expand image card.</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="proj-dots" id="projDots"></div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills" class="wrap reveal-anim reveal-right">
+    <div class="section-head"><h2>Skills</h2><p>Hover any skill to see my current level.</p></div>
+
+    <div class="skills-grid">
+      <div class="skill-row"><div class="skill-cat-label">CAD &amp; Design</div><div class="skill-pills" id="skills-cad"></div></div>
+      <div class="skill-row"><div class="skill-cat-label">Simulation</div><div class="skill-pills" id="skills-sim"></div></div>
+      <div class="skill-row"><div class="skill-cat-label">Engineering</div><div class="skill-pills" id="skills-eng"></div></div>
+      <div class="skill-row"><div class="skill-cat-label">Additive Mfg.</div><div class="skill-pills" id="skills-add"></div></div>
+      <div class="skill-row"><div class="skill-cat-label">Programming</div><div class="skill-pills" id="skills-prog"></div></div>
+      <div class="skill-row"><div class="skill-cat-label">Software</div><div class="skill-pills" id="skills-soft"></div></div>
+      <div class="skill-row"><div class="skill-cat-label">Documentation</div><div class="skill-pills" id="skills-doc"></div></div>
+    </div>
+
+    <div class="section-head skills-section-gap"><h2>Education</h2></div>
+    <div class="edu-grid">
+      <div class="edu-card glass">
+        <div class="edu-photo"><img src="assets/img/kcgcollegephoto.jpg" alt="KCG College of Technology"></div>
+        <div class="edu-info">
+          <div class="ei-date mono">GRADUATED 2026</div>
+          <h3>Bachelors of Engineering</h3>
+          <div class="ei-field">Aerospace Engineering</div>
+          <div class="ei-place">KCG College of Technology · Chennai, India</div>
+        </div>
+        <div class="edu-plus">+</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="wrap reveal-anim reveal-fade">
+    <div class="section-head"><h2>Let's Build Something</h2><p>Open to internships, entry-level roles, and collaborations or just a good conversation.</p></div>
+
+    <div class="contact-grid">
+      <div>
+        <div class="vibe-card glass">
+          <div class="vibe-head"><span class="vh-label">Currently Vibing To</span><span class="mono" style="color:var(--text-faint); font-size:11px;">♫ playlist</span></div>
+          <div class="vibe-body">
+            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator&theme=0" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="quote-card glass">
+          <div class="quote-mark">"</div>
+          <div class="quote-text" id="quoteText">Once you have tasted flight, you will forever walk the earth with your eyes turned skyward.</div>
+          <div class="quote-author mono" id="quoteAuthor">— Leonardo da Vinci</div>
+        </div>
+      </div>
+      <div class="note-card glass">
+        <div class="nc-label">Leave A Note</div>
+        <input type="text" class="field" placeholder="Your name" />
+        <input type="email" class="field" placeholder="your@email.com" />
+        <textarea class="field" placeholder="What's on your mind?" rows="3"></textarea>
+        <button class="note-submit" aria-label="Send note" id="noteSubmit">➤</button>
+      </div>
+    </div>
+
+    <div class="social-row glass">
+      <span class="sr-title">Let's Do This</span>
+
+      <div class="sr-links">
+        <a href="#" id="linkLinkedin" aria-label="LinkedIn" target="_blank" rel="noopener">
+          <span class="social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M6.5 8.25H3.25V20.5H6.5V8.25ZM4.875 3.5A1.9 1.9 0 1 0 4.875 7.3a1.9 1.9 0 0 0 0-3.8ZM20.75 13.48c0-3.69-1.97-5.41-4.6-5.41-2.12 0-3.07 1.17-3.6 1.99v-1.81H9.3V20.5h3.25v-6.07c0-1.6.3-3.14 2.28-3.14 1.95 0 1.97 1.82 1.97 3.25v5.96h3.25l.7-7.02Z" />
+            </svg>
+          </span>
+          <span class="social-label">LinkedIn</span>
+        </a>
+    
+        <a href="#" id="linkGithub" aria-label="GitHub" target="_blank" rel="noopener">
+          <span class="social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2.5a9.5 9.5 0 0 0-3 18.51c.47.09.65-.2.65-.45v-1.67c-2.65.58-3.2-1.13-3.2-1.13-.43-1.1-1.05-1.4-1.05-1.4-.86-.59.07-.58.07-.58.95.07 1.45.98 1.45.98.85 1.45 2.22 1.03 2.76.79.09-.61.33-1.03.6-1.27-2.12-.24-4.35-1.06-4.35-4.7 0-1.04.37-1.89.98-2.56-.1-.24-.43-1.21.09-2.52 0 0 .8-.26 2.62.98A9.1 9.1 0 0 1 12 7.17c.81 0 1.63.11 2.39.32 1.82-1.24 2.62-.98 2.62-.98.52 1.31.19 2.28.09 2.52.61.67.98 1.52.98 2.56 0 3.65-2.23 4.46-4.36 4.69.34.3.64.87.64 1.76v2.61c0 .25.17.55.65.45A9.5 9.5 0 0 0 12 2.5Z" />
+            </svg>
+          </span>
+          <span class="social-label">GitHub</span>
+        </a>
+    
+        <a href="#" id="linkWhatsapp" aria-label="WhatsApp" target="_blank" rel="noopener">
+          <span class="social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.86-1.27A9.5 9.5 0 1 0 12 2.5Zm0 17.25a7.72 7.72 0 0 1-3.94-1.08l-.28-.17-2.89.75.77-2.82-.18-.29A7.75 7.75 0 1 1 12 19.75Zm4.25-5.81c-.23-.12-1.35-.67-1.56-.75-.21-.08-.36-.12-.51.12-.15.23-.59.75-.72.9-.13.16-.26.17-.49.06-.23-.12-.97-.36-1.84-1.14-.68-.61-1.14-1.36-1.27-1.59-.13-.23-.01-.36.1-.47.1-.1.23-.26.35-.39.12-.13.15-.23.23-.39.08-.15.04-.29-.02-.41-.06-.12-.51-1.23-.7-1.69-.19-.45-.38-.39-.51-.4h-.43c-.15 0-.39.06-.59.29-.2.23-.77.75-.77 1.83s.79 2.12.9 2.27c.12.15 1.55 2.37 3.75 3.32.52.22.93.35 1.25.45.53.17 1.01.14 1.39.08.43-.06 1.35-.55 1.54-1.08.19-.53.19-.98.13-1.08-.05-.1-.2-.16-.43-.27Z" />
+            </svg>
+          </span>
+          <span class="social-label">WhatsApp</span>
+        </a>
+    
+        <a href="mailto:nigelignatius505@gmail.com" class="sr-email" aria-label="Send Email">
+          <span class="social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M3.5 5.5h17A1.5 1.5 0 0 1 22 7v10a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 17V7a1.5 1.5 0 0 1 1.5-1.5Zm0 2.05v.36l8.5 5.63 8.5-5.63v-.36h-17Zm17 2.48-7.95 5.27a1 1 0 0 1-1.1 0L3.5 10.03V17h17v-6.97Z" />
+            </svg>
+          </span>
+          <span class="social-label">Send Email</span>
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="site-footer">Designed &amp; developed by <b>Ignatius Nigel</b></footer>
+
+<script src="background.js"></script>
+<script>
+/* ===================== NAV: active link + mobile toggle ===================== */
+(function(){
+  const sections = ['home','about','experience','projects','skills','contact'].map(id => document.getElementById(id));
+  const navLinks = document.querySelectorAll('[data-nav]');
+  function onScroll(){
+    let current = sections[0].id;
+    const y = window.scrollY + 140;
+    for(const s of sections){ if(s.offsetTop <= y) current = s.id; }
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  const toggle = document.getElementById('navToggle');
+  const menu = document.getElementById('mobileMenu');
+  toggle.addEventListener('click', () => document.body.classList.toggle('nav-open'));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => document.body.classList.remove('nav-open')));
+})();
+
+/* ===================== DIRECTIONAL SCROLL-REVEAL (both ways) ===================== */
+(function(){
+  const targets = document.querySelectorAll('.reveal-anim');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { entry.target.classList.toggle('in-view', entry.isIntersecting); });
+  }, { threshold:0.3 });
+  targets.forEach(t => { if(t.id !== 'heroReveal') io.observe(t); });
+})();
+
+/* ===================== WHEEL / TOUCH SECTION-TO-SECTION SNAP ===================== */
+(function(){
+  const sectionIds = ['home','about','experience','projects','skills','contact'];
+  const sections = sectionIds.map(id => document.getElementById(id));
+  let idx = 0, animating = false;
+
+
+  function goTo(i){
+    i = Math.max(0, Math.min(sections.length - 1, i));
+    if(i === idx && !animating) return;
+    idx = i; animating = true;
+    sections[idx].scrollIntoView({ behavior:'smooth', block:'start' });
+    setTimeout(() => { animating = false; }, 900);
+  }
+
+  function syncIdxFromScroll(){
+    const y = window.scrollY + window.innerHeight * 0.4;
+    let closest = 0;
+    sections.forEach((s, i) => { if(s.offsetTop <= y) closest = i; });
+    if(closest !== idx){ idx = closest; }
+  }
+  window.addEventListener('scroll', () => { if(!animating) syncIdxFromScroll(); }, { passive:true });
+
+  const isMobileNav = window.matchMedia('(max-width:760px)').matches;
+
+  if(!isMobileNav){
+    let wheelLock = false;
+    window.addEventListener('wheel', (e) => {
+      if(animating || wheelLock) { e.preventDefault(); return; }
+      if(Math.abs(e.deltaY) < 8) return;
+      e.preventDefault();
+      wheelLock = true;
+      goTo(idx + (e.deltaY > 0 ? 1 : -1));
+      setTimeout(() => { wheelLock = false; }, 950);
+    }, { passive:false });
+
+    let touchStartY = 0;
+    window.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive:true });
+    window.addEventListener('touchend', (e) => {
+      if(animating) return;
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      if(Math.abs(dy) > 60) goTo(idx + (dy > 0 ? 1 : -1));
+    }, { passive:true });
+  }
+})();
+
+/* ===================== TYPEWRITER MULTILINGUAL GREETING ===================== */
+(function(){
+  const greetings = [
+    ">Npm start","Hello","Hola","Bonjour","Namaste","Hallo","Olá","nǐ hǎo 你好",
+    "Konnichiwa","Привет","안녕하세요","Ciao"
+  ];
+  let gi = 0;
+  const el = document.getElementById('greetWord');
+  function typeWord(word, cb){
+    let i = 0; el.textContent = '';
+    const iv = setInterval(() => { el.textContent = word.slice(0, i+1); i++; if(i >= word.length){ clearInterval(iv); setTimeout(cb, 1100); } }, 85);
+  }
+  function eraseWord(cb){
+    let text = el.textContent;
+    const iv = setInterval(() => { text = text.slice(0, -1); el.textContent = text; if(text.length === 0){ clearInterval(iv); cb(); } }, 40);
+  }
+  function loop(){ typeWord(greetings[gi], () => { eraseWord(() => { gi = (gi + 1) % greetings.length; loop(); }); }); }
+  loop();
+})();
+
+/* ===================== THEME + ACCENT PICKER ===================== */
+(function(){
+  const html = document.documentElement;
+  const themeBtn = document.getElementById('themeBtn');
+  const dropdown = document.getElementById('themeDropdown');
+  const modeBtns = document.querySelectorAll('.td-mode-btn');
+  const accentRow = document.getElementById('accentRow');
+  const accents = [
+    { id:'blue', hex:'#3ac8ff' }, { id:'violet', hex:'#a78bfa' }, { id:'emerald', hex:'#34d399' },
+    { id:'amber', hex:'#fbbf24' }, { id:'coral', hex:'#fb923c' }, { id:'rose', hex:'#f87171' },
+    { id:'magenta', hex:'#f472b6' }
+  ];
+  accents.forEach(a => {
+    const dot = document.createElement('div');
+    dot.className = 'td-dot' + (a.id === 'blue' ? ' active' : '');
+    dot.style.background = a.hex;
+    dot.dataset.accent = a.id;
+    dot.addEventListener('click', () => {
+      html.setAttribute('data-accent', a.id);
+      document.querySelectorAll('.td-dot').forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+      localStorage.setItem('portfolio-accent', a.id);
+    });
+    accentRow.appendChild(dot);
+  });
+  modeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      html.setAttribute('data-theme', btn.dataset.mode);
+      modeBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      themeBtn.textContent = btn.dataset.mode === 'light' ? '☀' : '◐';
+      localStorage.setItem('portfolio-theme', btn.dataset.mode);
+    });
+  });
+  themeBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('open'); });
+  document.addEventListener('click', (e) => { if(!dropdown.contains(e.target) && e.target !== themeBtn) dropdown.classList.remove('open'); });
+  const savedTheme = localStorage.getItem('portfolio-theme');
+  const savedAccent = localStorage.getItem('portfolio-accent');
+  if(savedTheme){ html.setAttribute('data-theme', savedTheme); themeBtn.textContent = savedTheme === 'light' ? '☀' : '◐';
+    modeBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === savedTheme)); }
+  if(savedAccent){ html.setAttribute('data-accent', savedAccent);
+    document.querySelectorAll('.td-dot').forEach(d => d.classList.toggle('active', d.dataset.accent === savedAccent)); }
+})();
+
+/* ===================== EXPERIENCE TABS ===================== */
+(function(){
+  const btns = document.querySelectorAll('.exp-tab-btn');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.exp-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+})();
+
+/* ===================== EXPERIENCE AUTO-SCROLL MARQUEE (desktop only — mobile is a plain stacked list) ===================== */
+(function(){
+  const isMobileExp = window.matchMedia('(max-width:760px)').matches;
+  if(isMobileExp) return; // mobile: leave the original cards as a static vertical list, no cloning/auto-scroll
+
+  const tracks = { timeline: document.getElementById('track-timeline'), competitions: document.getElementById('track-competitions') };
+  const state = {};
+
+  // seamless infinite loop: prepend a clone of the last card, append a full duplicate set
+  Object.entries(tracks).forEach(([key, track]) => {
+    const originals = Array.from(track.children);
+    const lastClone = originals[originals.length - 1].cloneNode(true);
+    lastClone.classList.add('is-clone');
+    track.insertBefore(lastClone, track.firstChild);
+    originals.forEach(card => { const c = card.cloneNode(true); c.classList.add('is-clone'); track.appendChild(c); });
+
+    const realStart = track.children[1]; // first real card, after the prepended clone
+    const dupStart = track.children[1 + originals.length]; // first duplicate card
+    state[key] = {
+      paused:false, resumeTimer:null,
+      startOffset: 0, wrapOffset: 0
+    };
+    requestAnimationFrame(() => {
+      state[key].startOffset = realStart.offsetLeft;
+      state[key].wrapOffset = dupStart.offsetLeft - realStart.offsetLeft;
+      track.scrollLeft = state[key].startOffset;
+    });
+  });
+
+  function autoStep(){
+    Object.entries(tracks).forEach(([key, track]) => {
+      if(state[key].paused) return;
+      track.scrollLeft += 0.5;
+      if(state[key].wrapOffset && track.scrollLeft >= state[key].startOffset + state[key].wrapOffset){
+        track.scrollLeft -= state[key].wrapOffset;
+      }
+    });
+    requestAnimationFrame(autoStep);
+  }
+  requestAnimationFrame(autoStep);
+  Object.entries(tracks).forEach(([key, track]) => {
+    track.addEventListener('mouseenter', () => state[key].paused = true);
+    track.addEventListener('mouseleave', () => state[key].paused = false);
+    track.addEventListener('touchstart', () => state[key].paused = true, { passive:true });
+  });
+  document.querySelectorAll('.side-arrow[data-marq]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.marq, dir = parseInt(btn.dataset.dir, 10);
+      const track = tracks[key];
+      state[key].paused = true;
+      track.scrollBy({ left: dir * 360, behavior:'smooth' });
+      clearTimeout(state[key].resumeTimer);
+      state[key].resumeTimer = setTimeout(() => state[key].paused = false, 3000);
+    });
+  });
+})();
+
+/* ===================== MOBILE EXPERIENCE PLUS / EXPAND ===================== */
+(function(){
+  if(!window.matchMedia('(max-width:760px)').matches) return;
+
+  const cards = Array.from(document.querySelectorAll('#experience .xcard'));
+
+  function collapseCards(except){
+    cards.forEach(card => {
+      if(card === except) return;
+
+      card.classList.remove('mobile-expanded');
+
+      const plus = card.querySelector('.exp-plus');
+      if(plus){
+        plus.textContent = '+';
+        plus.setAttribute('aria-label', 'Expand experience card');
+      }
+    });
+  }
+
+  cards.forEach(card => {
+    const plus = document.createElement('button');
+    plus.type = 'button';
+    plus.className = 'exp-plus';
+    plus.textContent = '+';
+    plus.setAttribute('aria-label', 'Expand experience card');
+
+    plus.addEventListener('click', function(event){
+      event.stopPropagation();
+
+      const willExpand = !card.classList.contains('mobile-expanded');
+
+      /* Close any other expanded card first */
+      collapseCards(card);
+
+      card.classList.toggle('mobile-expanded', willExpand);
+      plus.textContent = willExpand ? '−' : '+';
+      plus.setAttribute(
+        'aria-label',
+        willExpand ? 'Collapse experience card' : 'Expand experience card'
+      );
+    });
+
+    card.appendChild(plus);
+  });
+
+  /* Close the expanded card when switching between the two Experience tabs */
+  document.querySelectorAll('#experience .exp-tab-btn').forEach(button => {
+    button.addEventListener('click', function(){
+      collapseCards(null);
+    });
+  });
+
+  /* Close it after meaningful page scrolling, not tiny touch movement */
+  let scrollDistance = 0;
+  let previousScrollY = window.scrollY;
+  let scrollTimer;
+
+  window.addEventListener('scroll', function(){
+    const movement = Math.abs(window.scrollY - previousScrollY);
+    previousScrollY = window.scrollY;
+    scrollDistance += movement;
+
+    if(scrollDistance < 28) return;
+
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function(){
+      collapseCards(null);
+      scrollDistance = 0;
+    }, 180);
+  }, { passive:true });
+})();
+
+
+/* ===================== PROJECTS: CONTINUOUS CAROUSEL + EXPAND ===================== */
+(function(){
+  const stage = document.getElementById('projStage');
+  const dotsWrap = document.getElementById('projDots');
+  const prev = document.getElementById('projPrev');
+  const next = document.getElementById('projNext');
+  if(!stage) return;
+
+  const realCards = Array.from(stage.querySelectorAll('.proj-card'));
+  const realCount = realCards.length;
+  let allCards = [];
+  let dots = [];
+  function mediaElement(src, thumb) {
+    const isEmbed = /^https?:\/\/fembed\.co\/embed\//i.test(src );
+    const isVideo = /\.(mp4|webm|mov)(?:[?#].*)?$/i.test(src);
+    const elementType = isEmbed ? 'iframe' : (isVideo ? 'video' : 'img');
+    const el = document.createElement(elementType);
+
+    el.src = src;
+  
+    if (isEmbed) {
+      el.title = 'RC aircraft competition video';
+      el.loading = thumb ? 'lazy' : 'eager';
+      el.allow = 'autoplay; fullscreen; picture-in-picture';
+      el.allowFullscreen = true;
+      el.style.pointerEvents = thumb ? 'none' : 'auto';
+    }
+  
+    if (isVideo) {
+      el.muted = true;
+      el.loop = true;
+      el.playsInline = true;
+      el.autoplay = true;
+    }
+
+    if (!isEmbed) {
+      el.alt = '';
+    }
+
+    el.style.width = '100%';
+    el.style.height = '100%';
+    el.style.objectFit = thumb ? 'cover' : 'contain';
+
+    el.onerror = () => {
+      if (thumb) {
+        el.style.display = 'none';
+      } else {
+        el.remove();
+      }
+    };
+  
+    return el;
+  }
+
+
+  function addMediaUI(card, images){
+    const detail = card.querySelector('.proj-detail');
+    if(!detail) return;
+    if(!images.length){
+      const empty = document.createElement('div');
+      empty.className = 'pf-media-note';
+      empty.textContent = 'Add image/video paths to this project’s data-images list to enable the media cover.';
+      detail.appendChild(empty);
+      return;
+    }
+    const strip = document.createElement('div');
+    strip.className = 'proj-media-strip';
+    images.forEach((src, idx) => {
+      const thumb = document.createElement('button');
+      thumb.type = 'button';
+      thumb.className = 'proj-media-thumb';
+      thumb.appendChild(mediaElement(src, true));
+      const label = document.createElement('span');
+      label.textContent =
+        (/\.(mp4|webm|mov)(?:[?#].*)?$/i.test(src) ||
+          /^https?:\/\/fembed\.co\/embed\//i.test(src ))
+          ? 'VIDEO'
+          : 'IMAGE';
+      thumb.appendChild(label);
+      thumb.addEventListener('click', () => {
+        let cover = card.querySelector('.proj-media-cover');
+        if(!cover){
+          cover = document.createElement('div');
+          cover.className = 'proj-media-cover';
+          const close = document.createElement('button');
+          close.type = 'button';
+          close.className = 'proj-media-close';
+          close.textContent = 'Back';
+          close.addEventListener('click', () => card.classList.remove('media-open'));
+          cover.appendChild(close);
+          card.appendChild(cover);
+        }
+        cover.querySelectorAll('img,video').forEach(el => el.remove());
+        cover.appendChild(mediaElement(src, false));
+        card.classList.add('media-open');
+      });
+      strip.appendChild(thumb);
+    });
+    detail.appendChild(strip);
+  }
+
+  function wireCard(card, realIdx){
+    let images = [];
+    try{ images = JSON.parse(card.dataset.images || '[]'); }catch(e){ images = []; }
+
+    if(images.length){
+      card.classList.remove('no-media');
+      const slideWrap = card.querySelector('.thumb-slide');
+      if(slideWrap){
+        slideWrap.innerHTML = '';
+        const thumbnail = card.dataset.thumb || images[0];
+        slideWrap.appendChild(mediaElement(thumbnail, true));
+      }
+    }
+    addMediaUI(card, images);
+
+    const plusBtn = card.querySelector('.proj-plus');
+    const backBtn = card.querySelector('.proj-back');
+    plusBtn?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      card.classList.add('is-expanded');
+      autoPaused = true;
+      requestAnimationFrame(() => {
+        card.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+        setTimeout(() => { loopPosition = stage.scrollLeft; }, 450);
+      });
+    });
+    backBtn?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      card.classList.remove('is-expanded', 'media-open');
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => { autoPaused = false; }, 1200);
+    });
+  }
+
+  realCards.forEach((card, i) => wireCard(card, i));
+
+  /* Keep a second identical set so no card disappears at the loop boundary. */
+  const clones = realCards.map((card, index) => {
+    const clone = card.cloneNode(true);
+  
+    clone.classList.add('is-clone');
+    clone.classList.remove('is-expanded', 'media-open');
+    clone.querySelector('.proj-media-strip')?.remove();
+    clone.querySelector('.proj-media-cover')?.remove();
+
+    stage.appendChild(clone);
+    wireCard(clone, index);
+    return clone;
+  });
+
+  allCards = [...realCards, ...clones];
+  let loopStart = 0;
+  let loopWidth = 0;
+
+
+  realCards.forEach((_, i) => {
+    const dot = document.createElement('span');
+    if(i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => scrollToRealIndex(i));
+    dotsWrap.appendChild(dot);
+  });
+  dots = [...dotsWrap.querySelectorAll('span')];
+
+  function cardStep(){
+    const card = stage.querySelector('.proj-card');
+    if(!card) return 0;
+    const styles = getComputedStyle(stage);
+    return card.getBoundingClientRect().width + parseFloat(styles.columnGap || styles.gap || '0');
+  }
+  function scrollToRealIndex(realIdx, instant){
+    realIdx = (realIdx + realCount) % realCount;
+    const card = allCards[realIdx];
+    if(!card) return;
+    stage.scrollTo({
+      left: card.offsetLeft - (stage.clientWidth - card.clientWidth) / 2,
+      behavior: instant ? 'auto' : 'smooth'
+    });
+  }
+  function nearestRealIndex(){
+    const center = stage.scrollLeft + stage.clientWidth / 2;
+    let best = 0, distance = Infinity;
+    allCards.forEach((card, i) => {
+      const d = Math.abs(card.offsetLeft + card.clientWidth / 2 - center);
+      if(d < distance){ distance = d; best = i; }
+    });
+    return best;
+  }
+  function updateDots(realIdx){
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === realIdx));
+  }
+
+  stage.addEventListener('scroll', () => updateDots(nearestRealIndex()), { passive:true });
+
+  let loopPosition = 0;
+  let autoPaused = false;
+  let resumeTimer = null;
+  /* PROJECTS: pause auto-movement while the pointer is over any card */
+  stage.addEventListener('pointerover', (event) => {
+    const card = event.target.closest('.proj-card');
+    if (!card || !stage.contains(card)) return;
+  
+    autoPaused = true;
+    loopPosition = stage.scrollLeft;
+  });
+  
+  stage.addEventListener('pointerout', (event) => {
+    const card = event.target.closest('.proj-card');
+    const nextElement = event.relatedTarget;
+  
+    if (!card || (nextElement && card.contains(nextElement))) return;
+  
+    loopPosition = stage.scrollLeft;
+    clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(() => {
+      autoPaused = false;
+    }, 250);
+  });
+
+  function autoLoop() {
+    if (
+      !autoPaused &&
+      !stage.querySelector('.is-expanded') &&
+      realCount > 1 &&
+      loopWidth > 0
+    ) {
+      loopPosition += 0.65;
+  
+      if (loopPosition >= loopStart + loopWidth) {
+        loopPosition -= loopWidth;
+      }
+  
+      stage.scrollLeft = loopPosition;
+    }
+  
+    requestAnimationFrame(autoLoop);
+  }
+
+
+  stage.addEventListener('mouseenter', () => { autoPaused = true; loopPosition = stage.scrollLeft; });
+  stage.addEventListener('mouseleave', () => { loopPosition = stage.scrollLeft; autoPaused = false; });
+  stage.addEventListener('touchstart', () => { autoPaused = true; loopPosition = stage.scrollLeft; }, { passive:true });
+  stage.addEventListener('touchend', () => {
+    clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(() => { loopPosition = stage.scrollLeft; autoPaused = false; }, 1200);
+  }, { passive:true });
+
+  function moveProjects(direction) {
+    autoPaused = true;
+  
+    const step = cardStep();
+    if (!step) return;
+  
+    let target = stage.scrollLeft + direction * step;
+  
+    if (loopWidth > 0) {
+      while (target < loopStart) {
+        target += loopWidth;
+      }
+
+      while (target >= loopStart + loopWidth) {
+        target -= loopWidth;
+      }
+    }
+
+    loopPosition = target;
+    stage.scrollTo({
+      left: target,
+      behavior: 'smooth'
+    });
+  
+    clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(() => {
+      loopPosition = stage.scrollLeft;
+      autoPaused = false;
+    }, 1200);
+  }
+  
+  prev?.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    moveProjects(-1);
+  });
+  
+  next?.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    moveProjects(1);
+  });
+
+  window.addEventListener('resize', () => { loopPosition = stage.scrollLeft; }, { passive:true });
+  requestAnimationFrame(() => {
+    const firstReal = realCards[0];
+    const firstClone = clones[0];
+  
+    if(firstReal && firstClone){
+      loopStart = Math.max(
+        0,
+        firstReal.offsetLeft -
+          (stage.clientWidth - firstReal.clientWidth) / 2
+      );
+  
+      loopWidth = firstClone.offsetLeft - firstReal.offsetLeft;
+    }
+  
+    stage.scrollLeft = loopStart;
+    loopPosition = loopStart;
+    requestAnimationFrame(autoLoop);
+  });
+})();
+
+/* ===================== SKILLS DATA ===================== */
+(function(){
+  const data = {
+    'skills-cad': [
+      { name:'SolidWorks', level:'Advanced', pct:85, desc:'Primary CAD tool for UAV airframes & manufacturing drawings.' },
+      { name:'CATIA', level:'Intermediate', pct:65, desc:'Surface modeling & assembly work for aerospace structures.' },
+      { name:'Fusion 360', level:'Intermediate', pct:60, desc:'Rapid prototyping & 3D-printable part design.' },
+      { name:'3D Modeling', level:'Advanced', pct:82, desc:'Parametric & surface modeling across CAD platforms.' },
+      { name:'Assembly Design', level:'Advanced', pct:80, desc:'Multi-part assemblies for UAV & composite structures.' },
+      { name:'Technical Drawings', level:'Advanced', pct:80, desc:'GD&T-ready manufacturing drawings.' }
+    ],
+    'skills-sim': [
+      { name:'ANSYS Fluent (CFD)', level:'Advanced', pct:82, desc:'Nozzle & aerodynamic flow simulation, shock-wave analysis.' },
+      { name:'OpenRocket', level:'Intermediate', pct:60, desc:'Rocket stability & trajectory simulation.' },
+      { name:'Aerodynamic Analysis', level:'Advanced', pct:78, desc:'Lift, drag & stability evaluation for fixed-wing UAVs.' }
+    ],
+    'skills-eng': [
+      { name:'UAV Design', level:'Advanced', pct:88, desc:'Concept-to-flight fixed-wing UAV development.' },
+      { name:'Composite Structures', level:'Advanced', pct:80, desc:'Vacuum-bagged carbon fiber & fiberglass layup.' },
+      { name:'Product Development', level:'Intermediate', pct:60, desc:'Concept, iteration, and testing cycles.' },
+      { name:'Aerodynamics', level:'Advanced', pct:78, desc:'Applied aerodynamics across UAV & nozzle projects.' },
+      { name:'Propulsion Systems', level:'Intermediate', pct:62, desc:'Propulsion selection & integration for small aircraft.' }
+    ],
+    'skills-add': [
+      { name:'Basic 3D Printing', level:'Intermediate', pct:55, desc:'FDM prototyping for brackets, mounts & test parts.' },
+      { name:'Prototype Development', level:'Intermediate', pct:60, desc:'Iterating from CAD to physical test prototype.' }
+    ],
+    'skills-prog': [
+      { name:'Python', level:'Advanced', pct:80, desc:'Orbital propagation, simulations, data analysis.' },
+      { name:'MATLAB', level:'Advanced', pct:78, desc:'Maneuver optimization & numerical simulation.' }
+    ],
+    'skills-soft': [ { name:'Microsoft Office', level:'Advanced', pct:88, desc:'Reporting, presentations & documentation.' } ],
+    'skills-doc': [ { name:'Technical Documentation', level:'Advanced', pct:85, desc:'Reports, publications & project documentation.' } ]
+  };
+  Object.entries(data).forEach(([id, items]) => {
+    const wrap = document.getElementById(id);
+    items.forEach(item => {
+      const tag = document.createElement('div');
+      tag.className = 'skill-tag glass';
+      tag.innerHTML = `${item.name}
+        <div class="skill-tooltip glass">
+          <div class="st-level">${item.level}</div>
+          <div class="st-bar"><div class="st-bar-fill" style="width:${item.pct}%"></div></div>
+          <div class="st-desc">${item.desc}</div>
+        </div>`;
+      wrap.appendChild(tag);
+    });
+  });
+})();
+
+/* ===================== ROTATING MOTIVATIONAL QUOTES ===================== */
+(function(){
+  const quotes = [
+    { text:"Once you have tasted flight, you will forever walk the earth with your eyes turned skyward.", author:"Leonardo da Vinci" },
+    { text:"The only way to do great work is to love what you do.", author:"Steve Jobs" },
+    { text:"I have not failed. I've just found 10,000 ways that won't work.", author:"Thomas Edison" },
+    { text:"Somewhere, something incredible is waiting to be known.", author:"Carl Sagan" },
+    { text:"Research is what I'm doing when I don't know what I'm doing.", author:"Wernher von Braun" },
+    { text:"The future belongs to those who believe in the beauty of their dreams.", author:"Eleanor Roosevelt" },
+    { text:"It always seems impossible until it's done.", author:"Nelson Mandela" }
+  ];
+  let idx = 0;
+  const textEl = document.getElementById('quoteText');
+  const authorEl = document.getElementById('quoteAuthor');
+  setInterval(() => {
+    idx = (idx + 1) % quotes.length;
+    textEl.style.opacity = 0; authorEl.style.opacity = 0;
+    setTimeout(() => { textEl.textContent = quotes[idx].text; authorEl.textContent = '— ' + quotes[idx].author; textEl.style.opacity = 1; authorEl.style.opacity = 1; }, 300);
+  }, 6000);
+})();
+
+/* ===================== CURSOR-REACTIVE TILT (About card + Experience cards) ===================== */
+(function(){
+  const isTouch = window.matchMedia('(max-width:760px)').matches;
+  if(isTouch) return; // tilt is a desktop hover effect only
+
+  function attachTilt(el, xVar, yVar, strength){
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5..0.5
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      el.style.setProperty(yVar, (px * strength).toFixed(2) + 'deg');
+      el.style.setProperty(xVar, (-py * strength).toFixed(2) + 'deg');
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.setProperty(xVar, '0deg');
+      el.style.setProperty(yVar, '0deg');
+    });
+  }
+
+  const aboutCard = document.querySelector('.about-card');
+  if(aboutCard) attachTilt(aboutCard, '--arx', '--ary', 6);
+
+})();
+
+
+/* ===================== NOTE FORM (placeholder) ===================== */
+document.getElementById('noteSubmit').addEventListener('click', () => {
+  alert("This form isn't wired to a backend yet — let me know how you'd like messages delivered and I'll connect it.");
+});
+</script>
+
+</body>
+</html>
