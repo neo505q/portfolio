@@ -1057,7 +1057,23 @@
     display: block;
     fill: currentColor;
   }
-   
+  /* Mobile Experience cards: remove fade only when collapsed */
+  @media (max-width: 760px) {
+    #experience .xcard:not(.mobile-expanded)::after {
+      display: none !important;
+    }
+
+    /* Keep the fade when the card is expanded */
+    #experience .xcard.mobile-expanded::after {
+      display: block !important;
+      background: linear-gradient(
+        180deg,
+        transparent,
+        rgba(6, 7, 12, 0.96) 64%
+      ) !important;
+    }
+  }
+ 
 </style>
 </head>
 <body class="snap-container">
