@@ -1855,49 +1855,101 @@
   }
 
 
-  function addMediaUI(card, images){
-    const detail = card.querySelector('.proj-detail');
-    if(!detail) return;
-    if(!images.length){
-      const empty = document.createElement('div');
-      empty.className = 'pf-media-note';
-      empty.textContent = 'Add image/video paths to this project’s data-images list to enable the media cover.';
-      detail.appendChild(empty);
-      return;
+  function isHostedEmbed(src) {
+    return /^https?:\/\/fembed\.co\/embed\//i.test(src );
+  }  
+
+  function mediaAvailable(src) {
+    // Hosted videos stay visible because the embedded player checks itself.
+    if (isHostedEmbed(src)) {
+      return Promise.resolve(true);
     }
+
+    return new Promise((resolve) => {
+      const isVideo = /\.(mp4|webm|mov)(?:[?#].*)?$/i.test(src);
+      const probe = document.createElement(isVideo ? 'video' : 'img');
+      let finished = false;
+      let timeout;
+
+      const finish = (available) => {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timeout);
+        resolve(available);
+      };
+
+      timeout = setTimeout(() => finish(false), 3500);
+      probe.onload = () => finish(true);
+      probe.onerror = () => finish(false);
+
+      if (isVideo) {
+        probe.preload = 'metadata';
+        probe.onloadedmetadata = () => finish(true);
+      }
+
+      probe.src = src;
+    });
+  }
+
+  async function addMediaUI(card, images) {
+    const detail = card.querySelector('.proj-detail');
+    if (!detail) return;
+
+    // Keep every original path in data-images, but render only available files.
+    const availableImages = [];
+
+    for (const src of images) {
+      if (await mediaAvailable(src)) {
+        availableImages.push(src);
+      }
+    }
+
+    if (!availableImages.length) return;
+
     const strip = document.createElement('div');
     strip.className = 'proj-media-strip';
-    images.forEach((src, idx) => {
+
+    availableImages.forEach((src) => {
       const thumb = document.createElement('button');
       thumb.type = 'button';
       thumb.className = 'proj-media-thumb';
       thumb.appendChild(mediaElement(src, true));
+
       const label = document.createElement('span');
       label.textContent =
-        (/\.(mp4|webm|mov)(?:[?#].*)?$/i.test(src) ||
-          /^https?:\/\/fembed\.co\/embed\//i.test(src ))
+        (/\.(mp4|webm|mov)(?:[?#].*)?$/i.test(src) || isHostedEmbed(src))
           ? 'VIDEO'
           : 'IMAGE';
+
       thumb.appendChild(label);
+
       thumb.addEventListener('click', () => {
         let cover = card.querySelector('.proj-media-cover');
-        if(!cover){
+
+        if (!cover) {
           cover = document.createElement('div');
           cover.className = 'proj-media-cover';
+
           const close = document.createElement('button');
           close.type = 'button';
           close.className = 'proj-media-close';
           close.textContent = 'Back';
-          close.addEventListener('click', () => card.classList.remove('media-open'));
+          close.addEventListener('click', () => {
+            card.classList.remove('media-open');
+          });
+
           cover.appendChild(close);
           card.appendChild(cover);
         }
-        cover.querySelectorAll('img,video').forEach(el => el.remove());
+
+        cover.querySelectorAll('img, video, iframe').forEach((el) => el.remove());
         cover.appendChild(mediaElement(src, false));
         card.classList.add('media-open');
       });
+
       strip.appendChild(thumb);
     });
+
     detail.appendChild(strip);
   }
 
