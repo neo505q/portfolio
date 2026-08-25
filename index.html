@@ -214,8 +214,25 @@
   /* ===================== ABOUT ===================== */
   .about-card-shell{ width:100%; }
   .about-card{ padding:clamp(24px,4vw,52px); display:grid; grid-template-columns:0.8fr 1.2fr; gap:44px; align-items:center; position:relative; transform:perspective(1200px) rotateX(var(--arx,0deg)) rotateY(var(--ary,0deg)); transition:transform 0.25s ease-out; will-change:transform; }
-  .about-photo{ aspect-ratio:1/1; border-radius:18px; border:1.5px dashed var(--glass-border); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; color:var(--text-faint); font-family:'JetBrains Mono',monospace; font-size:12px; background:radial-gradient(circle at 50% 35%, rgba(58,200,255,0.08), transparent 70%); text-align:center; padding:20px; overflow:hidden; }
-  .about-photo img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
+  .about-photo {
+    aspect-ratio: 1 / 1;
+    border-radius: 18px;
+    border: 1.5px dashed var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #f7f7f7;
+  }
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 12px;
+  }
+
   .about-text p{ color:var(--text-dim); font-size:15.5px; margin-bottom:16px; }
   .about-text b{ color:var(--accent-2); font-weight:600; }
   .about-links{ margin-top:26px; display:flex; gap:12px; flex-wrap:wrap; }
@@ -1157,7 +1174,12 @@
     <div class="section-head"><h2>About Me</h2></div>
     <div class="about-card-shell">
       <div class="about-card glass">
-        <div class="about-photo"><span style="font-size:28px; opacity:0.6;">◐</span><span>ADD: your photo here</span></div>
+        <div class="about-photo">
+          <img
+            src="assets/img/ignatius-nigel-profile.jpeg"
+            alt="Ignatius Nigel, Aerospace Engineer"
+          >
+        </div>
         <div class="about-text">
           <p>I'm <b>Ignatius Nigel</b>, an Aerospace Engineering graduate from KCG College of Technology, Chennai, with hands-on project experience across <b>CAD design, CFD analysis, composite structures, and UAV systems</b>.</p>
           <p>I've taken multiple designs from concept through fabrication and flight-testing — from fixed-wing UAVs carrying 5&nbsp;kg payloads to vacuum-bagged composite airframes — with results validated through both simulation and physical testing.</p>
