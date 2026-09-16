@@ -2340,16 +2340,20 @@ document.getElementById('noteSubmit').addEventListener('click', () => {
   if(!splash||!tiles||!text||!author)return;
   document.body.classList.add('quoteIntro-active');
   const quotes=[
-    {text:'Because the people who are crazy enough to think they can change the world, are the ones who do.',author:'Steve Jobs'},
-    {text:'There’s no learning without trying lots of ideas and failing lots of times.',author:'Jony Ive'},
-    {text:'The best ideas start as conversations.',author:'Jony Ive'},
-    {text:'Companies are not ingenious, it’s the people in them that are.',author:'James Dyson'},
-    {text:'You need a stubborn belief in an idea in order to see it realised.',author:'James Dyson'},
-    {text:'A brilliant design will always benefit from the input of others.',author:'Zaha Hadid'},
-    {text:'Having small touches of color makes it more colorful than having the whole thing in color.',author:'Dieter Rams'},
-    {text:'Less, but better.',author:'Dieter Rams'},
-    {text:'Form does not necessarily follow function.',author:'Antoni Gaudí'},
-    {text:'When you have exhausted all possibilities, remember this: you haven’t.',author:'Thomas Edison'}
+    {text:'Once you have tasted flight, you will forever walk the earth with your eyes turned skyward.',author:'Leonardo da Vinci'},
+    {text:'The desire to fly is an idea handed down to us by our ancestors who looked enviously on the birds soaring freely through space.',author:'Wilbur Wright'},
+    {text:'If we all worked on the assumption that what is accepted as true really is true, there would be little hope of advance.',author:'Wilbur Wright'},
+    {text:'The most effective way to do it, is to do it.',author:'Amelia Earhart'},
+    {text:'Research is what I’m doing when I don’t know what I’m doing.',author:'Wernher von Braun'},
+    {text:'One good test result is worth a thousand expert opinions.',author:'Wernher von Braun'},
+    {text:'I have not failed. I’ve just found 10,000 ways that won’t work.',author:'Thomas Edison'},
+    {text:'You do what you can for as long as you can, and when you finally can’t, you do the next best thing — you back up, but you don’t give up.',author:'Chuck Yeager'},
+    {text:'Failure is not an option.',author:'Gene Kranz'},
+    {text:'The only way to a successful vehicle is testing, testing, testing.',author:'Burt Rutan'},
+    {text:'Somewhere, something incredible is waiting to be known.',author:'Carl Sagan'},
+    {text:'Research is creating new knowledge.',author:'Neil Armstrong'},
+    {text:'When something is important enough, you do it even if the odds are not in your favor.',author:'Elon Musk'},
+    {text:'It always seems impossible until it’s done.',author:'Nelson Mandela'}
   ];
   let previous=-1;
   try{previous=parseInt(sessionStorage.getItem('rn-intro-quote-last')??'-1',10)}catch{}
