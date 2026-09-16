@@ -6,7 +6,9 @@
 <title>Ignatius Nigel — Aerospace Engineer</title>
 <meta name="description" content="Ignatius Nigel — Aerospace Engineering graduate. CAD, CFD, composite structures, UAV systems." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Sacramento&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Sacramento&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600
+&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg-0:#050810; --bg-1:#080d1c;
@@ -520,13 +522,7 @@
     .wrap{ padding:0 20px; }
     section{ padding:60px 0; }
     .about-card{ padding:18px; gap:16px; }
-    .about-photo{ aspect-ratio:auto; height:250px; }
-    .about-photo .about-portrait {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 12%;
-    }
+    .about-photo{ aspect-ratio:auto; height:130px; }
     .about-text p{ font-size:14px; margin-bottom:12px; }
     .section-head{ margin-bottom:28px; }
 
@@ -1088,7 +1084,7 @@
     #experience .xcard:not(.mobile-expanded)::after {
       display: none !important;
     }
-
+  
     /* Keep the fade when the card is expanded */
     #experience .xcard.mobile-expanded::after {
       display: block !important;
@@ -1099,10 +1095,50 @@
       ) !important;
     }
   }
- 
+   
 </style>
 </head>
+<style id="quoteIntroStyles">
+body.quoteIntro-active{overflow:hidden}
+#quoteIntro{position:fixed;inset:0;z-index:500;pointer-events:auto;color:var(--quote-text,#2b2e33 )}
+#quoteIntro.is-out{pointer-events:none}
+#quoteIntro.is-out .quoteIntro__base{display:none}
+.quoteIntro__base{position:absolute;inset:0;background:var(--quote-cover,#f4f1fa)}
+.quoteIntro__tiles{position:absolute;inset:0;z-index:3;display:grid;pointer-events:none}
+.quoteIntro__tile{background:var(--quote-stripes,repeating-linear-gradient(0deg,#f4f1fa 0,#f4f1fa 2px,#e9e4f3 2px,#e9e4f3 3px));opacity:1;transition:opacity 90ms steps(2,jump-end)}
+#quoteIntro.is-quote .quoteIntro__tile{opacity:0}
+#quoteIntro.is-recover .quoteIntro__tile{opacity:1}
+#quoteIntro.is-out .quoteIntro__tile{opacity:0}
+.quoteIntro__content{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 clamp(28px,8vw,140px);text-align:center;opacity:0;transition:opacity .5s ease .15s;pointer-events:none}
+#quoteIntro.is-quote .quoteIntro__content{opacity:1}
+#quoteIntro.is-out .quoteIntro__content,
+#quoteIntro.is-out .quoteIntro__progress {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: none !important;
+}
+#quoteIntroText{margin:0;max-width:760px;color:var(--quote-text,#2b2e33);font-family:"Libre Baskerville",Georgia,serif;font-size:clamp(1.15rem,3.2vw,2.15rem);line-height:1.45;font-weight:400;text-wrap:balance}
+#quoteIntroAuthor{margin-top:clamp(14px,3vh,26px);color:var(--quote-author,rgba(43,46,51,.6));font-family:Inter,system-ui,sans-serif;font-size:clamp(.72rem,1.5vw,.9rem);letter-spacing:.14em;text-transform:uppercase}
+.quoteIntro__progress{position:absolute;left:50%;bottom:clamp(52px,12vh,116px);z-index:4;width:60px;height:2px;border-radius:2px;overflow:hidden;background:var(--quote-track,rgba(43,46,51,.14));opacity:0;transform:translateX(-50%);transition:opacity .5s ease .2s}
+#quoteIntro.is-quote .quoteIntro__progress{opacity:1}
+#quoteIntroProgress{display:block;width:100%;height:100%;border-radius:2px;background:var(--quote-progress,rgba(43,46,51,.4));transform-origin:left center;transform:scaleX(0)}
+#quoteIntro.is-quote #quoteIntroProgress{transform:scaleX(1);transition:transform 2780ms linear .15s}
+html[data-theme="dark"] #quoteIntro{--quote-cover:#0d0b1a;--quote-text:#f4f5f6;--quote-author:rgba(244,245,246,.62);--quote-track:rgba(244,245,246,.15);--quote-progress:rgba(244,245,246,.45);--quote-stripes:repeating-linear-gradient(0deg,#0d0b1a 0,#0d0b1a 2px,#17132a 2px,#17132a 3px)}
+@media (max-width:760px){#quoteIntroText{font-size:clamp(1.15rem,6.4vw,1.8rem)}#quoteIntroAuthor{font-size:clamp(.72rem,2.7vw,.9rem)}}
+@media (prefers-reduced-motion:reduce){#quoteIntro,#quoteIntro *{transition:none!important}}
+</style>
 <body class="snap-container">
+<div id="quoteIntro" aria-live="polite" aria-label="Introduction">
+  <div class="quoteIntro__base" aria-hidden="true"></div>
+  <div class="quoteIntro__tiles" aria-hidden="true"></div>
+  <div class="quoteIntro__content">
+    <p id="quoteIntroText"></p>
+    <p id="quoteIntroAuthor"></p>
+  </div>
+  <div class="quoteIntro__progress" aria-hidden="true">
+    <span id="quoteIntroProgress"></span>
+  </div>
+</div>
 
 <div id="canvas-container"></div>
 
@@ -1888,7 +1924,7 @@
 
   function isHostedEmbed(src) {
     return /^https?:\/\/fembed\.co\/embed\//i.test(src );
-  }  
+  }
 
   function mediaAvailable(src) {
     // Hosted videos stay visible because the embedded player checks itself.
@@ -1908,11 +1944,11 @@
         clearTimeout(timeout);
         resolve(available);
       };
-
+  
       timeout = setTimeout(() => finish(false), 3500);
       probe.onload = () => finish(true);
       probe.onerror = () => finish(false);
-
+  
       if (isVideo) {
         probe.preload = 'metadata';
         probe.onloadedmetadata = () => finish(true);
@@ -1928,15 +1964,15 @@
 
     // Keep every original path in data-images, but render only available files.
     const availableImages = [];
-
+  
     for (const src of images) {
       if (await mediaAvailable(src)) {
         availableImages.push(src);
       }
     }
-
+  
     if (!availableImages.length) return;
-
+  
     const strip = document.createElement('div');
     strip.className = 'proj-media-strip';
 
@@ -1977,12 +2013,13 @@
         cover.appendChild(mediaElement(src, false));
         card.classList.add('media-open');
       });
-
+  
       strip.appendChild(thumb);
     });
-
+  
     detail.appendChild(strip);
   }
+
 
   function wireCard(card, realIdx){
     let images = [];
@@ -2295,6 +2332,58 @@ document.getElementById('noteSubmit').addEventListener('click', () => {
   alert("This form isn't wired to a backend yet — let me know how you'd like messages delivered and I'll connect it.");
 });
 </script>
+<script id="quoteIntroScript">(()=>{
+  const splash=document.getElementById('quoteIntro');
+  const tiles=splash?.querySelector('.quoteIntro__tiles');
+  const text=document.getElementById('quoteIntroText');
+  const author=document.getElementById('quoteIntroAuthor');
+  if(!splash||!tiles||!text||!author)return;
+  document.body.classList.add('quoteIntro-active');
+  const quotes=[
+    {text:'Because the people who are crazy enough to think they can change the world, are the ones who do.',author:'Steve Jobs'},
+    {text:'There’s no learning without trying lots of ideas and failing lots of times.',author:'Jony Ive'},
+    {text:'The best ideas start as conversations.',author:'Jony Ive'},
+    {text:'Companies are not ingenious, it’s the people in them that are.',author:'James Dyson'},
+    {text:'You need a stubborn belief in an idea in order to see it realised.',author:'James Dyson'},
+    {text:'A brilliant design will always benefit from the input of others.',author:'Zaha Hadid'},
+    {text:'Having small touches of color makes it more colorful than having the whole thing in color.',author:'Dieter Rams'},
+    {text:'Less, but better.',author:'Dieter Rams'},
+    {text:'Form does not necessarily follow function.',author:'Antoni Gaudí'},
+    {text:'When you have exhausted all possibilities, remember this: you haven’t.',author:'Thomas Edison'}
+  ];
+  let previous=-1;
+  try{previous=parseInt(sessionStorage.getItem('rn-intro-quote-last')??'-1',10)}catch{}
+  let index=Math.floor(Math.random()*quotes.length);
+  if(index===previous)index=(index+1)%quotes.length;
+  try{sessionStorage.setItem('rn-intro-quote-last',String(index))}catch{}
+  text.textContent=quotes[index].text;
+  author.textContent='— '+quotes[index].author;
+  const cols=Math.min(22,Math.max(7,Math.round(innerWidth/66)));
+  const rows=Math.min(26,Math.max(8,Math.round(innerHeight/66)));
+  const centerX=(cols-1)/2;
+  const centerY=(rows-1)/2;
+  const maxDistance=Math.hypot(centerX,centerY)||1;
+  const delays=Array.from({length:cols*rows},(_,tileIndex)=>{
+    const row=Math.floor(tileIndex/cols);
+    const col=tileIndex%cols;
+    return .34*Math.random()+Math.hypot(col-centerX,row-centerY)/maxDistance*.16;
+  });
+  tiles.style.gridTemplateColumns='repeat('+cols+',1fr)';
+  tiles.style.gridTemplateRows='repeat('+rows+',1fr)';
+  delays.forEach(delay=>{
+    const tile=document.createElement('span');
+    tile.className='quoteIntro__tile';
+    tile.style.transitionDelay=delay+'s';
+    tiles.appendChild(tile);
+  });
+  const timers=[
+    window.setTimeout(()=>splash.classList.add('is-quote'),120),
+    window.setTimeout(()=>splash.classList.add('is-recover'),2900),
+    window.setTimeout(()=>splash.classList.add('is-out'),3600),
+    window.setTimeout(()=>{splash.remove();document.body.classList.remove('quoteIntro-active')},4400)
+  ];
+  window.addEventListener('pagehide',()=>timers.forEach(clearTimeout),{once:true});
+})();</script>
 
 </body>
 </html>
