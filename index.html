@@ -1103,6 +1103,77 @@
       ) !important;
     }
   }
+/* ===================== NEXSTUDIO-STYLE FLUID CURSOR ===================== */
+
+.fluid-cursor {
+  z-index: 2000;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: difference;
+  will-change: transform, opacity;
+  width: 0;
+  height: 0;
+  transition: opacity 0.18s;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.fluid-cursor[data-visible="true"] {
+  opacity: 1;
+}
+
+.fluid-cursor__body {
+  transform-origin: 92%;
+  will-change: transform;
+  width: 30px;
+  height: 25px;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.fluid-cursor__body img {
+  filter: brightness(0 ) invert(1);
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.fluid-cursor[data-interactive="true"] .fluid-cursor__body {
+  opacity: 0.92;
+}
+
+.fluid-cursor[data-pressed="true"] .fluid-cursor__body {
+  opacity: 0.76;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-custom-cursor="true"],
+  html[data-custom-cursor="true"] body,
+  html[data-custom-cursor="true"] body *,
+  html[data-custom-cursor="true"] body::before,
+  html[data-custom-cursor="true"] body::after {
+    cursor: none !important;
+  }
+
+  html[data-custom-cursor="true"] .fluid-cursor {
+    display: block;
+  }
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+  html[data-custom-cursor="true"] .fluid-cursor {
+    display: block;
+  }
+
+  .fluid-cursor__body {
+    width: 26px;
+    height: 22px;
+  }
+}
    
 </style>
 </head>
@@ -2396,6 +2467,259 @@ document.getElementById('noteSubmit').addEventListener('click', () => {
   ];
   window.addEventListener('pagehide',()=>timers.forEach(clearTimeout),{once:true});
 })();</script>
+<div
+  class="fluid-cursor"
+  data-visible="false"
+  data-interactive="false"
+  data-pressed="false"
+  aria-hidden="true"
+>
+  <span class="fluid-cursor__body">
+    <img
+      src="assets/img/nexstudio-cursor.svg"
+      alt=""
+      width="600"
+      height="500"
+      loading="eager"
+    />
+  </span>
+</div>
+<script id="fluidCursorScript">
+(() => {
+  const cursor = document.querySelector(".fluid-cursor");
+  const cursorBody = cursor?.querySelector(".fluid-cursor__body");
 
+  if (!cursor || !cursorBody) return;
+
+  const finePointer = window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  );
+
+  const coarsePointer = window.matchMedia("(pointer: coarse)");
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+  const desktopScreen = window.matchMedia("(min-width: 769px)");
+
+  let animationFrame = 0;
+  let touchMode = false;
+  let cursorActive = false;
+  let cursorVisible = false;
+
+  let targetX = window.innerWidth / 2;
+  let targetY = window.innerHeight / 2;
+
+  let currentX = targetX;
+  let currentY = targetY;
+
+  let lastX = targetX;
+  let lastY = targetY;
+
+  let targetAngle = 0;
+  let currentAngle = 0;
+  let distance = 0;
+  let isInteractive = false;
+
+  function restoreNativeCursor() {
+    document.documentElement.style.removeProperty("cursor");
+    document.body.style.removeProperty("cursor");
+  }
+
+  function animateCursor() {
+    const deltaX = targetX - currentX;
+    const deltaY = targetY - currentY;
+    const pointerDistance = Math.hypot(deltaX, deltaY);
+
+    currentX += deltaX * (touchMode ? 0.105 : 0.19);
+    currentY += deltaY * (touchMode ? 0.105 : 0.19);
+
+    distance += (pointerDistance - distance) * 0.14;
+
+    currentAngle +=
+      ((targetAngle - currentAngle + 540) % 360 - 180) *
+      (touchMode ? 0.12 : 0.16);
+
+    const scaleX = Math.min(distance / 900, 0.02);
+    const scaleY = Math.min(distance / 1100, 0.012);
+    const hoverScale = isInteractive ? 1.07 : 1;
+
+    cursor.style.transform =
+      `translate3d(${currentX}px, ${currentY}px, 0) rotate(${currentAngle}deg)`;
+
+    cursorBody.style.transform =
+      `translate(-92%, -50%) scale(` +
+      `${(1 + scaleX) * hoverScale},` +
+      `${(1 - scaleY) * hoverScale})`;
+
+    animationFrame = requestAnimationFrame(animateCursor);
+  }
+
+  function updateCursorMode() {
+    touchMode =
+      coarsePointer.matches || !desktopScreen.matches;
+
+    cursorActive =
+      !reducedMotion.matches &&
+      (touchMode || finePointer.matches);
+
+    if (!cursorActive) {
+      delete document.documentElement.dataset.customCursor;
+      delete document.documentElement.dataset.cursorInput;
+
+      restoreNativeCursor();
+
+      cursor.dataset.visible = "false";
+      cursorVisible = false;
+
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+      }
+
+      return;
+    }
+
+    document.documentElement.dataset.customCursor = "true";
+    document.documentElement.dataset.cursorInput =
+      touchMode ? "touch" : "pointer";
+
+    if (touchMode) {
+      restoreNativeCursor();
+
+      cursor.dataset.visible = "true";
+      cursorVisible = true;
+    } else {
+      document.documentElement.style.setProperty(
+        "cursor",
+        "none",
+        "important"
+      );
+
+      document.body.style.setProperty(
+        "cursor",
+        "none",
+        "important"
+      );
+
+      cursor.dataset.visible = "false";
+      cursorVisible = false;
+    }
+
+    if (!animationFrame) {
+      animationFrame = requestAnimationFrame(animateCursor);
+    }
+  }
+
+  function updatePointer(x, y, target) {
+    if (!cursorActive) return;
+
+    targetX = x;
+    targetY = y;
+
+    if (!cursorVisible) {
+      currentX = targetX;
+      currentY = targetY;
+      lastX = targetX;
+      lastY = targetY;
+      cursorVisible = true;
+    }
+
+    const movementX = targetX - lastX;
+    const movementY = targetY - lastY;
+
+    if (Math.hypot(movementX, movementY) > 0.5) {
+      targetAngle =
+        Math.atan2(movementY, movementX) * 180 / Math.PI;
+    }
+
+    lastX = targetX;
+    lastY = targetY;
+
+    isInteractive =
+      target instanceof Element &&
+      Boolean(
+        target.closest(
+          "a, button, input, textarea, select, [role='button'], [data-cursor-interactive]"
+        )
+      );
+
+    cursor.dataset.interactive =
+      isInteractive ? "true" : "false";
+
+    cursor.dataset.visible = "true";
+  }
+
+  window.addEventListener(
+    "pointermove",
+    (event) => {
+      if (
+        !touchMode &&
+        event.pointerType !== "touch"
+      ) {
+        updatePointer(
+          event.clientX,
+          event.clientY,
+          event.target
+        );
+      }
+    },
+    { passive: true }
+  );
+
+  window.addEventListener(
+    "pointerdown",
+    (event) => {
+      updatePointer(
+        event.clientX,
+        event.clientY,
+        event.target
+      );
+
+      cursor.dataset.pressed = "true";
+    },
+    { passive: true }
+  );
+
+  window.addEventListener(
+    "pointerup",
+    () => {
+      cursor.dataset.pressed = "false";
+    },
+    { passive: true }
+  );
+
+  document.documentElement.addEventListener(
+    "pointerleave",
+    () => {
+      if (!touchMode) {
+        cursor.dataset.visible = "false";
+      }
+    }
+  );
+
+  document.documentElement.addEventListener(
+    "pointerenter",
+    () => {
+      if (cursorVisible) {
+        cursor.dataset.visible = "true";
+      }
+    }
+  );
+
+  [
+    finePointer,
+    coarsePointer,
+    reducedMotion,
+    desktopScreen
+  ].forEach((mediaQuery) => {
+    mediaQuery.addEventListener(
+      "change",
+      updateCursorMode
+    );
+  });
+
+  updateCursorMode();
+})();
+</script>  
 </body>
 </html>
