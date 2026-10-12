@@ -1219,6 +1219,54 @@
     transform: scale(1.07);
   }
 }
+
+  /* =====================================================================
+     EXPERIENCE REWORK — grey tabs + sliding glider, photo & fade removed,
+     big index number clipped ~20% at the card's bottom edge
+     ===================================================================== */
+
+  /* ---------- 1. CARDS: no photo, no fade ---------- */
+  #experience .xcard{
+    background-image:none !important;
+    background:linear-gradient(145deg, rgba(16,18,26,.97), rgba(23,25,35,.97)) !important;
+    color:var(--text) !important;
+    border:1px solid var(--glass-border) !important;
+    display:flex !important;
+    flex-direction:column !important;
+  }
+  html[data-theme="light"] #experience .xcard{ background:linear-gradient(145deg,#f7f7f9,#eaeaef) !important; }
+  #experience .xcard::before{ content:none !important; }
+  #experience .xcard::after{ display:none !important; }        /* <- kills the fade */
+  #experience .xcard:hover{
+    border-color:var(--glass-border-hi) !important;
+    box-shadow:0 18px 44px rgba(0,0,0,.45) !important;
+  }
+  html[data-theme="light"] #experience .xcard:hover{ box-shadow:0 18px 40px rgba(15,30,60,.18) !important; }
+
+  /* text back to theme colours (it was forced white for the photo version) */
+  #experience .xcard h4{ color:var(--text) !important; }
+  #experience .xcard p{ color:var(--text-dim) !important; }
+  #experience .xcard .tc-date,
+  #experience .xcard .cc-scope{ color:var(--accent-2) !important; }
+  #experience .xcard .cc-venue{ color:var(--text-faint) !important; }
+  #experience .xcard .tc-tag{ color:var(--accent-2) !important; }
+
+  /* ---------- 2. BIG NUMBER: right end, bottom, ~20% clipped ---------- */
+  #experience .xcard > .xnum{
+    position:absolute !important;
+    right:12px; bottom:0; z-index:0 !important;
+    margin:0; pointer-events:none; user-select:none;
+    font-family:'Plus Jakarta Sans',sans-serif; font-weight:800;
+    font-size:120px; line-height:1; letter-spacing:-.06em;
+    color:rgba(255,255,255,.085);
+    height:.62em; overflow:hidden;
+  }
+  html[data-theme="light"] #experience .xcard > .xnum{ color:rgba(11,24,48,.10); }
+  @media (max-width:760px){
+    #experience .xcard > .xnum{ font-size:96px; }
+    /* mobile cards collapse to 82px — only show the number once expanded */
+    #experience .xcard:not(.mobile-expanded) > .xnum{ display:none; }
+  }
   
 </style>
 </head>
@@ -1377,31 +1425,31 @@ html[data-theme="dark"] #quoteIntro{--quote-cover:#0d0b1a;--quote-text:#f4f5f6;-
         <div class="side-arrow glass side-right" data-marq="competitions" data-dir="1">→</div>
         <div class="marquee-wrap">
           <div class="marquee-track" id="track-competitions">
-            <div class="xcard glass" style="--card-bg:url('assets/img/competition-01.png');"><div class="xcard-top-border"></div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/competition-01.png');"><div class="xcard-top-border"></div><span class="xnum" aria-hidden="true">01</span>
               <div class="cc-scope mono" style="color:var(--accent-2);">International</div>
               <h4>Technoxian WRC — RC Craft Challenge</h4>
               <p>Demonstrated strong understanding of aerodynamics and stability optimization under competitive constraints.</p>
               <div class="cc-venue">Technoxian WRC</div>
             </div>
-            <div class="xcard glass" style="--card-bg:url('assets/img/competition-02.png');"><div class="xcard-top-border"></div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/competition-02.png');"><div class="xcard-top-border"></div><span class="xnum" aria-hidden="true">02</span>
               <div class="cc-scope mono">National</div>
               <h4>HAC'24 — Aeromodelling Competition</h4>
               <p>Integrated payload delivery mechanisms with optimized flight control and structural efficiency.</p>
               <div class="cc-venue">HITS, Chennai</div>
             </div>
-            <div class="xcard glass" style="--card-bg:url('assets/img/competition-03.png');"><div class="xcard-top-border"></div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/competition-03.png');"><div class="xcard-top-border"></div><span class="xnum" aria-hidden="true">03</span>
               <div class="cc-scope mono">National</div>
               <h4>Shaastra Aeromodelling Competition</h4>
               <p>Focused on aerodynamic efficiency improvements through iterative design and testing.</p>
               <div class="cc-venue">IIT Madras, Chennai</div>
             </div>
-            <div class="xcard glass" style="--card-bg:url('assets/img/competition-04.png');"><div class="xcard-top-border"></div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/competition-04.png');"><div class="xcard-top-border"></div><span class="xnum" aria-hidden="true">04</span>
               <div class="cc-scope mono">National</div>
               <h4>Boeing Aeromodelling Competition</h4>
               <p>Applied mission-based design strategies emphasizing payload integration and performance optimization.</p>
               <div class="cc-venue">IIT Madras, Chennai</div>
             </div>
-            <div class="xcard glass" style="--card-bg:url('assets/img/competition-05.png');"><div class="xcard-top-border"></div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/competition-05.png');"><div class="xcard-top-border"></div><span class="xnum" aria-hidden="true">05</span>
               <div class="cc-scope mono">National</div>
               <h4>Kurukshetra Aeromodelling Event</h4>
               <p>Gained hands-on experience in aerodynamic analysis and real-time flight testing techniques.</p>
@@ -1418,25 +1466,25 @@ html[data-theme="dark"] #quoteIntro{--quote-cover:#0d0b1a;--quote-text:#f4f5f6;-
         <div class="side-arrow glass side-right" data-marq="timeline" data-dir="1">→</div>
         <div class="marquee-wrap">
           <div class="marquee-track" id="track-timeline">
-            <div class="xcard glass" style="--card-bg:url('assets/img/satellite-thumbnail.jpg');"><div class="xcard-top-border"></div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/satellite-thumbnail.jpg');"><div class="xcard-top-border"></div><span class="xnum" aria-hidden="true">01</span>
               <div class="tc-date mono">AUG 2025 – MAR 2026</div>
               <h4>Autonomous Satellite Collision Avoidance &amp; Maneuver Optimization</h4>
               <p>Conjunction risk framework for LEO satellites; ~8–12% improvement in maneuver timing.</p>
               <span class="tc-tag">Published · ICCII</span>
             </div>
-            <div class="xcard glass" style="--card-bg:url('assets/img/nozzle-thumbnail.jpg');"><div class="xcard-top-border"></div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/nozzle-thumbnail.jpg');"><div class="xcard-top-border"></div><span class="xnum" aria-hidden="true">02</span>
               <div class="tc-date mono">NOV 2024 – JAN 2025</div>
               <h4>Supersonic Nozzle Flow Visualization &amp; CFD Analysis</h4>
               <p>CFD study of C-D nozzles at Mach 1.6 / 1.8 / 2.0 using ANSYS Fluent.</p>
               <span class="tc-tag">Simulated &amp; Validated</span>
             </div>
-            <div class="xcard glass" style="--card-bg:url('assets/img/rc-aircraft-thumbnail.jpg');"><div class="xcard-top-border"></div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/rc-aircraft-thumbnail.jpg');"><div class="xcard-top-border"></div><span class="xnum" aria-hidden="true">03</span>
               <div class="tc-date mono">NOV 2023 – OCT 2024</div>
               <h4>RC Aircraft Design &amp; Payload Delivery Systems</h4>
               <p>Fixed-wing UAVs carrying payloads up to 5 kg, flight-tested across 5 competitions.</p>
               <span class="tc-tag">Flight-Tested</span>
             </div>
-            <div class="xcard glass" style="--card-bg:url('assets/img/composite-thumbnail.jpg');"><div class="xcard-top-border"></div>
+            <div class="xcard glass" style="--card-bg:url('assets/img/composite-thumbnail.jpg');"><div class="xcard-top-border"></div><span class="xnum" aria-hidden="true">04</span>
               <div class="tc-date mono">MAY 2024 – JUL 2024</div>
               <h4>Structural Optimization of Airframes using Composite Materials</h4>
               <p>Vacuum-bagged carbon fiber/fiberglass structures — 15–20% weight reduction.</p>
@@ -2764,6 +2812,40 @@ document.getElementById('noteSubmit').addEventListener('click', () => {
   });
 
   updateCursorMode();
+})();
+</script>  
+<script id="expNumberScript">
+/* ===== big card numbers: clip exactly ~20% off the bottom edge ===== */
+(function(){
+  const ctx = document.createElement('canvas').getContext('2d');
+
+  function sizeExpNumbers(){
+    document.querySelectorAll('#experience .xcard > .xnum').forEach(el => {
+      const txt = (el.textContent || '').trim();
+      const fs = parseFloat(getComputedStyle(el).fontSize);
+      if(!fs || !txt) return;
+
+      ctx.font = '800 ' + fs + 'px "Plus Jakarta Sans", "Inter", sans-serif';
+      const m = ctx.measureText(txt);
+      const ascent  = m.actualBoundingBoxAscent  || fs * 0.72;
+      const descent = m.actualBoundingBoxDescent || 0;
+      const glyphH  = ascent + descent;
+
+      const baseline    = (fs - glyphH) / 2 + ascent;   // line-height is 1
+      const glyphBottom = baseline + descent;
+      const keep        = glyphBottom - glyphH * 0.20;  // hide the bottom 20%
+
+      el.style.height = Math.max(8, keep).toFixed(1) + 'px';
+    });
+  }
+
+  window.__sizeExpNumbers = sizeExpNumbers;
+  sizeExpNumbers();
+  window.addEventListener('load', sizeExpNumbers);
+  window.addEventListener('resize', () => requestAnimationFrame(sizeExpNumbers));
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(sizeExpNumbers).catch(() => {}); }
+  setTimeout(sizeExpNumbers, 400);
+  setTimeout(sizeExpNumbers, 1200);
 })();
 </script>  
 </body>
