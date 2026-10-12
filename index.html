@@ -244,6 +244,7 @@
   .exp-tabs{ display:flex; justify-content:center; gap:8px; margin-bottom:38px; flex-wrap:wrap; padding:6px; border-radius:999px; max-width:fit-content; margin-left:auto; margin-right:auto; }
   .exp-tab-btn{ padding:11px 24px; border-radius:999px; font-size:13.5px; font-weight:600; color:var(--text-dim); cursor:pointer; border:none; background:transparent; transition:all 0.25s ease; }
   .exp-tab-btn.active{ background:linear-gradient(135deg, var(--accent), var(--accent-dim)); color:var(--accent-ink); }
+  .exp-tab-btn:hover{ transform:translateY(-2px); }
   .exp-panel{ display:none; }
   .exp-panel.active{ display:block; }
 
@@ -1174,7 +1175,51 @@
     height: 22px;
   }
 }
-   
+
+/* ===================== HOVER: CARD LIFT + IMAGE ZOOM ===================== */
+@media (hover:hover) and (pointer:fine) and (min-width:761px){
+
+  /* ---- Experience marquee cards (Competitions + Project Timeline) ---- */
+  #experience .xcard{
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  #experience .xcard:hover{
+    transform: perspective(900px) translateY(-8px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+    box-shadow: 0 18px 44px rgba(0,0,0,.45);
+  }
+  #experience .xcard::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:0;
+    background-image: var(--card-bg, none);
+    background-size: cover;
+    background-position: center;
+    pointer-events: none;
+    transform: scale(1);
+    transition: transform .55s cubic-bezier(.22,.61,.36,1);
+    will-change: transform;
+  }
+  #experience .xcard:hover::before{
+    transform: scale(1.08);
+  }
+
+  /* ---- Projects carousel cards ---- */
+  .proj-card{
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .proj-card:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 18px 44px rgba(0,0,0,.45);
+  }
+  .thumb-slide img{
+    transition: transform .55s cubic-bezier(.22,.61,.36,1);
+  }
+  .proj-card:hover .thumb-slide img{
+    transform: scale(1.07);
+  }
+}
+  
 </style>
 </head>
 <style id="quoteIntroStyles">
